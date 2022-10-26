@@ -6,17 +6,22 @@ import 套件：
 圖形使用者介面套件GUI：Tkinter	pip install pillow
 OS	pip install os
 math	pip install math
+matplotlib.pyplot  python -m pip install -U matplotlib
 
 
 function:
 
-Open image: filedialog.askopenfilename()
-Save image: img.save("FILE NAME", "FORMAT")
-Display: img.show()
-Zoom in and shrink: mage.resize( (width , height) , resample)
-Rotate: Image.rotate( angle , resample)
-Gray-level slicing: 
-X 代表圖片中各 pixel 的灰階值以三種方式: Linearly, Exponentially, Logarithmically 
-轉換 X 成 新的灰階值 Y 組成新的圖片
-Preserve? Yes/No Button : 決定要不要保留 Upperbound 和 Lowerbound 之外的灰階值 pixel，不保留設為 0
-Reset: 移除所有對原本開啟圖片的影像處理
+open_img(): filedialog.askopenfilename()
+open_raw(): filedialog.askopenfilename(), Image.frombytes("L", (512, 512), x.read(), 'raw')
+save_img(): img.save("FILE NAME", "FORMAT")
+display_htg(): img.show()
+reset_img(): 移除所有對原本開啟圖片的影像處理
+display_htg(): import matplotlib.pyplot as plt, plt.bar(), plt.show()
+auto_level(): 計算每個灰階出現的機率，將原累計機率乘以255\
+bit_plane(): 將灰階值轉成二進位置，使用者輸入要取第幾位數，若值為0灰階值設為0，值為1灰階值設為255
+smoothing(): 平均附近pixel的灰階值，將中間的pixel取代為平均值，使用者輸入的值越大，平均的範圍越大
+sharpening(): 原圖灰階值 * (輸入值 + 1) - smooting後的原圖灰階值 * (輸入值)
+median(): 取附近pixel灰階值的中位數，將中間的pixel取代為中位數，使用者輸入的值越大，取值的範圍越大
+Laplacian(): 原圖灰階值 - 轉換後圖片的灰階值(轉換的矩陣[1, 1, 1,
+					                1, -8, 1,
+					                1, 1, 1] 9個轉換後的值取代原本中間的值)
