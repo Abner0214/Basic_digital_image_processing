@@ -1,0 +1,22 @@
+python 3.10.7 64bit
+
+import 套件：
+
+影像處理套件：PIL ( Pillow )	pip install tkinter
+圖形使用者介面套件GUI：Tkinter	pip install pillow
+OS	pip install os
+math	pip install math
+
+
+function:
+
+Open image: filedialog.askopenfilename()
+Save image: img.save("FILE NAME", "FORMAT")
+Display: img.show()
+Zoom in and shrink: mage.resize( (width , height) , resample)
+Rotate: Image.rotate( angle , resample)
+Gray-level slicing: 
+X 代表圖片中各 pixel 的灰階值以三種方式: Linearly, Exponentially, Logarithmically 
+轉換 X 成 新的灰階值 Y 組成新的圖片
+Preserve? Yes/No Button : 決定要不要保留 Upperbound 和 Lowerbound 之外的灰階值 pixel，不保留設為 0
+Reset: 移除所有對原本開啟圖片的影像處理

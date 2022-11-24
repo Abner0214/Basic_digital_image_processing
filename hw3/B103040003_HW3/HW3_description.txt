@@ -1,0 +1,121 @@
+python 3.9.7 64bit
+
+影像處理套件：PIL ( Pillow )	pip install tkinter
+圖形使用者介面套件 GUI：Tkinter	pip install pillow
+OS	pip install os
+math	pip install math
+numpy	pip install numpy
+matplotlib.pyplot  python -m pip install -U matplotlib
+
+
+functions:
+
+open_img():
+	open image
+	Uisng filedialog.askopenfilename()
+open_raw():
+	open raw image
+	Uisng filedialog.askopenfilename(), Image.frombytes("L", (512, 512), x.read(), 'raw')
+save_img(): 
+	save image
+	img.save("FILE NAME", "FORMAT")
+reset_img():
+	移除所有對原本開啟圖片的影像處理
+
+Zoom in and shrink:
+	用百分比放大縮小圖片
+	mage.resize( (width , height) , resample)
+Rotate:
+	旋轉圖片
+	Image.rotate( angle , resample)
+Gray-level slicing: 
+	X 代表圖片中各 pixel 的灰階值以三種方式: Linearly, Exponentially, Logarithmically 
+	轉換 X 成 新的灰階值 Y 組成新的圖片
+	Preserve? Yes/No Button : 決定要不要保留 Upperbound 和 Lowerbound 之外的灰階值 pixel，不保留設為 0
+
+display_htg():
+	dispaly current histogram
+	import matplotlib.pyplot as plt, plt.bar(), plt.show()
+auto_level(): 
+	計算每個灰階出現的機率，將原累計機率乘以255
+bit_plane():
+	將灰階值轉成二進位置，使用者輸入要取第幾位數，若值為0灰階值設為0，值為1灰階值設為255
+smoothing():
+	平均附近pixel的灰階值，將中間的pixel取代為平均值，使用者輸入的值越大，平均的範圍越大
+sharpening():
+	原圖灰階值 * (輸入值 + 1) - smooting後的原圖灰階值 * (輸入值)
+median():
+	取附近pixel灰階值的中位數，將中間的pixel取代為中位數，使用者輸入的值越大，取值的範圍越大
+Laplacian():
+	原圖灰階值 - 轉換後圖片的灰階值(轉換的矩陣[1, 1, 1,
+					           1, -8, 1,
+					           1, 1, 1] 9個轉換後的值取代原本中間的值)
+log_mag_pha_img(): 
+	Show Log|F(u, v)|, magnitude-only image, phase-only image.
+	Using numpy, matplotlib.pyplot.subplots
+step1_5(): 
+	step.1 Multiplying the image by (-1)^(x+y)
+	step.2 Computing the DFT
+	step.3 Taking the complex conjugate of the transform
+	step.4 Computing the inverse DFT
+	step.5 Multiplying the real part of the result by (-1)^(x+y)
+	Using numpy, matplotlib.pyplot.subplots()
+red_img():
+	Show red component image.
+	Using Image.Image.split()
+	Take split_img[0]
+green_img():
+	show green component image.
+	Using Image.Image.split()
+	Take split_img[1]
+blue_img():
+	Show blue component image.
+	Using Image.Image.split()
+	Take split_img[2]
+rgb_to_hsi(R ,G, B):
+	RGB to HSI.
+	Using math
+hsi_to_rgb(h, s, i):
+	HSI to RGB.
+	Using math
+rgb_to_h_s_i_subplot():
+	Plot Hue, saturation, Intenstity image by image's RGB value.
+	rgb_to_hsi()
+	Using matplotlib.pyplot.subplots()
+rgb_complements():
+	RGB complements to enhance the detail.
+	255 - rgb value
+	Using Image.Image.split()
+rgb_hsi_sharping():
+	soomthing image and RGB Laplacian HSI Laplacian.
+	Laplacian()
+	Using matplotlib.pyplot.subplots()
+seg_fea_mask():
+	Segmenting the feathers(Obverse image's Hue and Saturation).
+	rgb_to_hsi()
+	Using matplotlib.pyplot.subplots()
+
+<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+
+Promblem. 1
+	Spatial Filters (degree): [    ] [Arithmetic mean smoothing]
+Promblem. 2
+	2D FFT: [do]
+Promblem. 3
+	DFT Step. (1)-(5): [do]
+	(b)
+	   step. 1  (-1)^(x+y)原白色部分的區塊 x+y 是奇數的 pixel 為黑色
+	   step. 2  DFT 時域轉頻域
+	   step. 3  取虛數共軛
+	   step. 4  DFT 逆轉換頻域轉時域
+	   step. 5  因為共軛所以圖片上下顛倒
+Promblem. 4
+	(a)  [Display image]
+	(b)  Component image: [do]
+	(c)  Convert RGB to HSI: [do]
+	(d)  RGB color complement (Enhance the detail): [do]
+	(e)  Sharping with the Laplacian to this image by using RGB: [do] (此功能需要跑比較久😅不是出 bug 喔)
+	(f)  Segmenting the feathers: [do]
+
+如果要比較影像處理前後的差異，可以在做完每個步驟後按下 [Display image] 按鈕，顯示當前影像處理的結果
+[Reset current image] 按鈕，移除對原本開啟圖片的所有影像處理
