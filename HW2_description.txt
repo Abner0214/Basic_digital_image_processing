@@ -3,7 +3,7 @@ python 3.10.7 64bit
 import 套件：
 
 影像處理套件：PIL ( Pillow )	pip install tkinter
-圖形使用者介面套件GUI：Tkinter	pip install pillow
+圖形使用者介面套件 GUI：Tkinter	pip install pillow
 OS	pip install os
 math	pip install math
 matplotlib.pyplot  python -m pip install -U matplotlib
