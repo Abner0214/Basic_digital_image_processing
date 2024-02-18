@@ -14,7 +14,6 @@ import copy
 import sys
 
 
-
 #主程式
 '''
 傳入 img 轉成 r,g,b 三個 pixel arr
@@ -227,7 +226,6 @@ def setrgbpixel(r,g,b,sr,sg,sb,x,y):
 sys.setrecursionlimit(20000)
 
 
-        
 
 def colorblock(rimg,gimg,bimg,x,y,rang,setr=0,setg=0,setb=0,depth=0):#10項
     #print("in colorblock")
