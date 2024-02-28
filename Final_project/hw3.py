@@ -657,9 +657,6 @@ def rgb_to_hsi(R ,G, B):
         S  = 1 - min([r, g, b]) / I
     else:
         S = 0
-    # if(r==g==b):
-    #     # print("h")
-    #     return 0
     if g>=b:
         try:
             H=degrees(acos((r-g/2-b/2)/sqrt(r**2+g**2+b**2-g*b-r*g-r*b)))
@@ -670,7 +667,7 @@ def rgb_to_hsi(R ,G, B):
             H = 360 - degrees(acos((r-g/2-b/2)/sqrt(r**2+g**2+b**2-g*b-r*g-r*b)))
         except:
             H = 359
-            
+
     return (H, S, I)
 
 # HSI to RGB
@@ -753,7 +750,7 @@ def rgb_to_h_s_i_subplot():
     #fig.canvas.set_window_title("Problem. 3")
 
     fig.set_figheight(8)
-    fig.set_figwidth(14)
+    fig.set_figwidth(8)
     plt.show()
 
 # RGB complements to enhance the detail
@@ -1060,85 +1057,85 @@ btn_rgb_hsi_sharping = tk.Button(window, text = "do ", command = rgb_hsi_sharpin
 lbl_seg_fea = tk.Label(window, text = "Segmenting the feathers")
 # Button
 btn_seg_fea = tk.Button(window, text = "do", command = seg_fea_mask)
-#                     ######  composition  ######
-# # Heading
-# Dynamic_Island.grid(row = 0, column = 0, columnspan = 15, rowspan = 1)
-# # Open / Save / Dispaly
-# lbl_open.grid(row = 1, column = 0)
-# btn_open.grid(row = 1, column = 1)
-# lbl_save_dispaly.grid(row = 3, column = 0)
-# entry_fileName.grid(row = 4, column = 0)
-# btn_save.grid(row = 4, column = 1)
-# btn_display.grid(row = 4, column = 2)
-# # open .raw file
-# btn_raw.grid(row = 1, column = 2)
-# # Haruki reset!
-# btn_reset.grid(row = 2, column = 1)
-# # Display the histogram of images
-# btn_htg.grid(row = 2, column = 2)                                     
-# # Adjust contrast / brightness of images
-# lbl_bri.grid(row = 6, column = 0)
-# lbl_a.grid(row = 6, column = 1)
-# entry_a.grid(row = 6, column = 2)
-# lbl_b.grid(row = 6, column = 3)
-# entry_b.grid(row = 6, column = 4)
-# btn_lin.grid(row = 6, column = 5)
-# btn_exp.grid(row = 6, column = 6)
-# btn_log.grid(row = 6, column = 7)
-# # Zoom in and shrink
-# lbl_resize.grid(row = 7, column = 0)
-# entry_resize.grid(row = 7, column = 1)
-# btn_resize.grid(row = 7, column = 2)
-# # Rotate
-# lbl_rot.grid(row = 8, column = 0)
-# entry_rot.grid(row = 8, column = 1)
-# btn_rot.grid(row = 8, column = 2)
-# # Gray-level slicing
-# lbl_slc.grid(row = 9, column = 0)
-# lbl_lowerbound.grid(row = 9, column = 1)
-# entry_lowerbound.grid(row = 9, column = 2)
-# lbl_upperbound.grid(row = 9, column = 3)
-# entry_upperbound.grid(row = 9, column = 4)
-# lbl_prs.grid(row = 9, column = 5)
-# btn_if_prs.grid(row = 9, column = 6)
-# btn_slc.grid(row = 9, column = 7)                               
-# # Histogram equlization
-# lbl_eql.grid(row = 10, column = 0)
-# btn_htg_eql.grid(row = 10, column = 1)
-# # Bit-plane image
-# lbl_bit_plane.grid(row = 11, column = 0)
-# entry_bit_plane.grid(row = 11, column = 1)
-# btn_bit_plane.grid(row = 11, column = 2)
-# # Smoothing / Sharpening / Median / Laplacian
-# lbl_spt_flt.grid(row = 12, column = 0)
-# entry_degree.grid(row = 12, column = 1)
-# btn_smt.grid(row = 12, column = 2)
-# btn_shp.grid(row = 12, column = 3)
-# btn_med.grid(row = 12, column = 4)
-# btn_lpl.grid(row = 12, column = 5)
-# # log |F(u,v)|  &  Magnitude and Phase images
-# lbl_log_mag_pha_img.grid(row = 13, column = 0)
-# btn_log_mag_pha_img.grid(row = 13, column = 1)
-# # 3. step. (1) - (5)
-# lbl_step1_5.grid(row = 15, column = 0)
-# btn_step1_5.grid(row = 15, column = 1)
-# # 4. (b) - (f)
-# lbl_com_img.grid(row = 20, column = 0)
-# btn_red_img.grid(row = 20, column = 1)
-# btn_green_img.grid(row = 20, column = 2)
-# btn_blue_img.grid(row = 20, column = 3)
+                    ######  composition  ######
+# Heading
+Dynamic_Island.grid(row = 0, column = 0, columnspan = 15, rowspan = 1)
+# Open / Save / Dispaly
+lbl_open.grid(row = 1, column = 0)
+btn_open.grid(row = 1, column = 1)
+lbl_save_dispaly.grid(row = 3, column = 0)
+entry_fileName.grid(row = 4, column = 0)
+btn_save.grid(row = 4, column = 1)
+btn_display.grid(row = 4, column = 2)
+# open .raw file
+btn_raw.grid(row = 1, column = 2)
+# Haruki reset!
+btn_reset.grid(row = 2, column = 1)
+# Display the histogram of images
+btn_htg.grid(row = 2, column = 2)                                     
+# Adjust contrast / brightness of images
+lbl_bri.grid(row = 6, column = 0)
+lbl_a.grid(row = 6, column = 1)
+entry_a.grid(row = 6, column = 2)
+lbl_b.grid(row = 6, column = 3)
+entry_b.grid(row = 6, column = 4)
+btn_lin.grid(row = 6, column = 5)
+btn_exp.grid(row = 6, column = 6)
+btn_log.grid(row = 6, column = 7)
+# Zoom in and shrink
+lbl_resize.grid(row = 7, column = 0)
+entry_resize.grid(row = 7, column = 1)
+btn_resize.grid(row = 7, column = 2)
+# Rotate
+lbl_rot.grid(row = 8, column = 0)
+entry_rot.grid(row = 8, column = 1)
+btn_rot.grid(row = 8, column = 2)
+# Gray-level slicing
+lbl_slc.grid(row = 9, column = 0)
+lbl_lowerbound.grid(row = 9, column = 1)
+entry_lowerbound.grid(row = 9, column = 2)
+lbl_upperbound.grid(row = 9, column = 3)
+entry_upperbound.grid(row = 9, column = 4)
+lbl_prs.grid(row = 9, column = 5)
+btn_if_prs.grid(row = 9, column = 6)
+btn_slc.grid(row = 9, column = 7)                               
+# Histogram equlization
+lbl_eql.grid(row = 10, column = 0)
+btn_htg_eql.grid(row = 10, column = 1)
+# Bit-plane image
+lbl_bit_plane.grid(row = 11, column = 0)
+entry_bit_plane.grid(row = 11, column = 1)
+btn_bit_plane.grid(row = 11, column = 2)
+# Smoothing / Sharpening / Median / Laplacian
+lbl_spt_flt.grid(row = 12, column = 0)
+entry_degree.grid(row = 12, column = 1)
+btn_smt.grid(row = 12, column = 2)
+btn_shp.grid(row = 12, column = 3)
+btn_med.grid(row = 12, column = 4)
+btn_lpl.grid(row = 12, column = 5)
+# log |F(u,v)|  &  Magnitude and Phase images
+lbl_log_mag_pha_img.grid(row = 13, column = 0)
+btn_log_mag_pha_img.grid(row = 13, column = 1)
+# 3. step. (1) - (5)
+lbl_step1_5.grid(row = 15, column = 0)
+btn_step1_5.grid(row = 15, column = 1)
+# 4. (b) - (f)
+lbl_com_img.grid(row = 20, column = 0)
+btn_red_img.grid(row = 20, column = 1)
+btn_green_img.grid(row = 20, column = 2)
+btn_blue_img.grid(row = 20, column = 3)
 
-# lbl_RGB_to_HSI.grid(row = 21, column = 0)
-# btn_RGB_to_HSI.grid(row = 21, column = 1)
+lbl_RGB_to_HSI.grid(row = 21, column = 0)
+btn_RGB_to_HSI.grid(row = 21, column = 1)
 
-# lbl_rgb_cpm.grid(row = 22, column = 0)
-# btn_rgb_cpm.grid(row = 22, column = 1)
+lbl_rgb_cpm.grid(row = 22, column = 0)
+btn_rgb_cpm.grid(row = 22, column = 1)
 
-# lbl_rgb_hsi_sharping.grid(row = 23, column = 0)
-# btn_rgb_hsi_sharping.grid(row = 23, column = 1)
+lbl_rgb_hsi_sharping.grid(row = 23, column = 0)
+btn_rgb_hsi_sharping.grid(row = 23, column = 1)
 
-# lbl_seg_fea.grid(row = 24, column = 0)
-# btn_seg_fea.grid(row = 24, column = 1)
+lbl_seg_fea.grid(row = 24, column = 0)
+btn_seg_fea.grid(row = 24, column = 1)
 
 
-# window.mainloop()
+window.mainloop()
