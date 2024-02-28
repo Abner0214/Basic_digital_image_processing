@@ -34,6 +34,6 @@ def reset_img():
 
 ##################################  window  ##################################
 
-window = tk.Tk()
-window.title("Image File Operations")
-Dynamic_Island = tk.Label(window, text = "Simple graphic user interface of PIL.", bg = "yellow", font = ("Arial", 16), width = 70, height = 2)
+# window = tk.Tk()
+# window.title("Image File Operations")
+# Dynamic_Island = tk.Label(window, text = "Simple graphic user interface of PIL.", bg = "yellow", font = ("Arial", 16), width = 70, height = 2)
