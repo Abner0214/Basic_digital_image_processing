@@ -913,7 +913,7 @@ def seg_fea_mask():
 window = tk.Tk()
 
 
-window.title("GUI of PIL")
+window.title("GUI of hw3")
 Dynamic_Island = tk.Label(window, text = "A simple graphic user interface of PIL.", bg = "yellow", font = ("Arial", 16), width = 80, height = 2)
 
                     ######  Define  ######
