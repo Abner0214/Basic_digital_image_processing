@@ -8,8 +8,8 @@ def color_wheel():
     screen = pygame.display.set_mode((550,500))
     pygame.display.set_caption("Select")
 
-    color_wheel_img = pygame.image.load(os.path.join("color_wheel.png")).convert()
-    gray_lvl_img = pygame.image.load(os.path.join("gray_level3.png")).convert()
+    color_wheel_img = pygame.image.load(os.path.join("Color wheel/color_wheel.png")).convert()
+    gray_lvl_img = pygame.image.load(os.path.join("Color wheel/gray_level3.png")).convert()
     color_wheel_img = pygame.transform.scale(color_wheel_img,(500,500))
     gray_lvl_img = pygame.transform.scale(gray_lvl_img,(50,500))
 
