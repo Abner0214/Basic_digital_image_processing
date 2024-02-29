@@ -5,6 +5,7 @@ from tkinter import filedialog
 import PIL
 from PIL import Image, ImageTk
 import matplotlib.pyplot as plt
+import os
 import sheep
 import shineWu
 
@@ -480,9 +481,9 @@ btn_save = tk.Button(window, text = "Save", command = save_img)
 # Label
 lbl_watermark = tk.Label(window, text = "Add a watermark : ")
 # Button
-NOW_img = Image.open(r"c:\Users\User\OneDrive\桌面\Side Project\Basic_digital_image_processing\Final_project\watermark_WATER.png")
-WATERMARK = Image.open(r"c:\Users\User\OneDrive\桌面\Side Project\Basic_digital_image_processing\Final_project\watermark_WATER.png")
-put_WATERMARK = Image.open(r"c:\Users\User\OneDrive\桌面\Side Project\Basic_digital_image_processing\Final_project\watermark_WATER.png")
+NOW_img = Image.open(os.path.join("Image samples\Color\Lenna_512_color.tif"))
+WATERMARK = Image.open(os.path.join("Image samples\Color wheel\color_wheel.png"))
+put_WATERMARK = Image.open(os.path.join("Image samples\Color wheel\color_wheel.png"))
 btn_cho_watermark = tk.Button(window, text = "Choice", command = open_watermark_img)
 btn_draw_watermark = tk.Button(window, text = "Draw", command = using_draw_watermark)
 btn_watermark = tk.Button(window, text = "Add", command = lambda: make_lowpass_watermark(NOW_img, WATERMARK))
@@ -534,8 +535,8 @@ entry_slice_y1 = tk.Entry(window, width = 5)
 entry_slice_x2 = tk.Entry(window, width = 5)
 entry_slice_y2 = tk.Entry(window, width = 5)
 # Button
-WHITE_img = Image.open(r"c:\Users\User\OneDrive\桌面\Side Project\Basic_digital_image_processing\Final_project\watermark_WATER.png")
-BLACK_img = Image.open(r"c:\Users\User\OneDrive\桌面\Side Project\Basic_digital_image_processing\Final_project\watermark_WATER.png")
+WHITE_img = Image.open(os.path.join("Image samples\Color wheel\color_wheel.png"))
+BLACK_img = Image.open(os.path.join("Image samples\Color wheel\color_wheel.png"))
 btn_white_img = tk.Button(window, text = "Image1", command = open_white_img)
 btn_black_img = tk.Button(window, text = "Image2", command = open_black_img)
 btn_overlay_img = tk.Button(window, text = "Overlay", command = lambda: make_camouflage_img_generater(WHITE_img, BLACK_img))
