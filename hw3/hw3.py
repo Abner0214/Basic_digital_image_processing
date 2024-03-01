@@ -1046,6 +1046,7 @@ btn_rgb_hsi_sharping = tk.Button(window, text = "do ", command = rgb_hsi_sharpin
 lbl_seg_fea = tk.Label(window, text = "Segmenting the feathers")
 # Button
 btn_seg_fea = tk.Button(window, text = "do", command = seg_fea_mask)
+
                     ######  composition  ######
 # Heading
 Dynamic_Island.grid(row = 0, column = 0, columnspan = 15, rowspan = 1)
