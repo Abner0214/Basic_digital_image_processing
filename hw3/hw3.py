@@ -127,10 +127,7 @@ def lin_adj(a, b):
     #X = 1
     #global NOW_img
     #new_img = ImageEnhance.Brightness(NOW_img).enhance(a * X + b)
-    #NOW_img = new_img
-    #new_img = ImageTk.PhotoImage(new_img)
-    #lbl_PRESENT_img.configure(image = new_img)
-    #lbl_PRESENT_img.image = new_img
+
     global Dynamic_Island
     Dynamic_Island.config(text = "Linearly adjust!", bg = "gold", font = ("Arial", 14), width = 45, height = 2)
     window.update_idletasks()
@@ -154,10 +151,7 @@ def exp_adj(a, b):
     #X = 1
     #global NOW_img
     #new_img = ImageEnhance.Brightness(NOW_img).enhance(math.exp(a * X + b))
-    #NOW_img = new_img
-    #new_img = ImageTk.PhotoImage(new_img)
-    #lbl_PRESENT_img.configure(image = new_img)
-    #lbl_PRESENT_img.image = new_img
+
     global Dynamic_Island
     Dynamic_Island.config(text = "Exponentially adjust!", bg = "SeaGreen", font = ("Arial", 14), width = 30, height = 2)
     window.update_idletasks()
@@ -188,10 +182,7 @@ def log_adj(a, b):
     #X = 1
     #global NOW_img
     #new_img = ImageEnhance.Brightness(NOW_img).enhance(math.log(a * X + b))
-    #NOW_img = new_img
-    #new_img = ImageTk.PhotoImage(new_img)
-    #lbl_PRESENT_img.configure(image = new_img)
-    #lbl_PRESENT_img.image = new_img
+
     Dynamic_Island.config(text = "Logarithmically adjust!", bg = "firebrick", font = ("Arial", 14), width = 40, height = 2)
     window.update_idletasks()
     
