@@ -6,6 +6,8 @@ from PIL import Image, ImageTk
 import matplotlib.pyplot as plt
 import numpy
 
+
+global current_photo_image
 def update_display_canvas(photo_image):
     global current_photo_image
     current_photo_image = photo_image  # Store the reference globally
