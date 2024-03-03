@@ -9,99 +9,86 @@ import matplotlib.pyplot as plt
 import numpy
 
 
-# Haruki reset!
-def reset_img():
+def update_display_canvas(photo_image):
+    canvas.create_image(0, 0, anchor='nw', image=photo_image)
+    canvas.config(scrollregion=canvas.bbox('all'))
 
+def showProcessing():
     Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
     window.update_idletasks()
-    # *fileName = entry.get()
-    # *global ORIGNAL_open_img
-    # *ORIGNAL_open_img = Image.open(fileName)
-    global fileName
-    
-    global ORIGNAL_open_img
-    global ORIGNAL_img
-    global lbl_PRESENT_img  # current image in the window
 
-    #ORIGNAL_open_img = Image.open(fileName)
-
-    wid = 512
-    hei = 512
-    
-    if (fileName[-4:] != ".raw"):
-        image = PIL.Image.open(fileName)
-        wid, hei = image.size
-    global NOW_img
-    NOW_img = ORIGNAL_open_img
-    lbl_PRESENT_img = tk.Label(window, image = ORIGNAL_img, width = wid, height = hei)
-    lbl_PRESENT_img.image = ORIGNAL_img
-    lbl_PRESENT_img.grid(row = 2, column = 0)
-
-    Dynamic_Island.config(text = "Reset! The image is back to the way when it was just opened!", bg = "hot pink", font = ("Arial", 14), width = 60, height = 2)
-    window.update_idletasks()
-    
 # open image
 def open_img():
     
-    Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
-    window.update_idletasks()
-    global fileName
+    showProcessing()
+    
+    global filePath
     global NOW_img
     global ORIGNAL_open_img
-    global ORIGNAL_img
-    global lbl_PRESENT_img  # current image in the window
-    fileName = filedialog.askopenfilename()
-    ORIGNAL_open_img = Image.open(fileName)
-    NOW_img = ORIGNAL_open_img
-    ORIGNAL_img = ImageTk.PhotoImage(ORIGNAL_open_img)
-    image = PIL.Image.open(fileName)
-    wid, hei = image.size
-    lbl_PRESENT_img = tk.Label(window, image = ORIGNAL_img, width = wid, height = hei)
-    lbl_PRESENT_img.image = ORIGNAL_img
-    lbl_PRESENT_img.grid(row = 2, column = 0)
+    global ORIGNAL_PhotoImage
     
-    nameStr = fileName.split("/")
-
+    filePath = filedialog.askopenfilename()
+    ORIGNAL_open_img = Image.open(filePath)
+    NOW_img = ORIGNAL_open_img.copy()
+    ORIGNAL_PhotoImage = ImageTk.PhotoImage(ORIGNAL_open_img)
+    
+    update_display_canvas(ORIGNAL_PhotoImage)
+    
+    nameStr = filePath.split("/")
     Dynamic_Island.config(text = "You open this image: " + nameStr[-1] , bg = "AntiqueWhite1", font = ("Arial", 16), width = 80, height = 2)
     window.update_idletasks()
 
-    return image
-
-# open .raw file
+# open .raw image file
 def open_raw():
 
-    Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
-    window.update_idletasks()
-    global fileName
+    showProcessing()
+
+    global filePath
     global NOW_img
     global ORIGNAL_open_img
-    global ORIGNAL_img
+    global ORIGNAL_PhotoImage
     global lbl_PRESENT_img  # current image in the window
-    fileName = filedialog.askopenfilename(initialdir = "/", title = "Select a .raw file",)
-    x = open(fileName,'rb')
+    filePath = filedialog.askopenfilename(initialdir = "/", title = "Select a .raw image file",)
+    x = open(filePath,'rb')
     ORIGNAL_open_img = Image.frombytes("L", (512, 512), x.read(), 'raw')
-    NOW_img = ORIGNAL_open_img
-    ORIGNAL_img = ImageTk.PhotoImage(ORIGNAL_open_img)
-    #image = PIL.Image.open(fileName)
-    #wid, hei = image.size
-    lbl_PRESENT_img = tk.Label(window, image = ORIGNAL_img, width = 512, height = 512)
-    lbl_PRESENT_img.image = ORIGNAL_img
-    lbl_PRESENT_img.grid(row = 2, column = 0)
-
-    nameStr = fileName.split("/")
+    NOW_img = ORIGNAL_open_img.copy()
+    ORIGNAL_PhotoImage = ImageTk.PhotoImage(ORIGNAL_open_img)
     
-    Dynamic_Island.config(text = "You open this .raw file: " + nameStr[-1] , bg = "AntiqueWhite1", font = ("Arial", 16), width = 80, height = 2)
+    update_display_canvas(ORIGNAL_PhotoImage)
+
+    nameStr = filePath.split("/")
+    Dynamic_Island.config(text = "You open this .raw image file: " + nameStr[-1] , bg = "AntiqueWhite1", font = ("Arial", 16), width = 80, height = 2)
     window.update_idletasks()
-    if not fileName:
-        Dynamic_Island.config(text = "Fail to open this .raw file" , bg = "AntiqueWhite1", font = ("Arial", 16), width = 80, height = 2)
+
+    if not filePath:
+        Dynamic_Island.config(text = "Fail to open this .raw image file" , bg = "AntiqueWhite1", font = ("Arial", 16), width = 80, height = 2)
         window.update_idletasks()
         return
+
+# Haruki reset!
+def reset_img():
+
+    showProcessing()
+
+    global filePath
+    global NOW_img
+    global ORIGNAL_open_img
+    global ORIGNAL_PhotoImage
+
+    NOW_img = ORIGNAL_open_img
+
+    photo_image = ImageTk.PhotoImage(NOW_img)
+    update_display_canvas(photo_image)
+
+    nameStr = filePath.split("/")
+    Dynamic_Island.config(text = f"{nameStr[-1]} resetd! It looks like opened just now!", bg = "hot pink", font = ("Arial", 14), width = 60, height = 2)
+    window.update_idletasks()
 
 # save image 
 def save_img():
 
-    Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
-    window.update_idletasks()
+    showProcessing()
+
     newName = entry_fileName.get()
     if newName[-3:] == ".tif":
         NOW_img.save(newName, "tiff")
@@ -115,8 +102,8 @@ def save_img():
 # display image
 def display_img():
     
-    Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
-    window.update_idletasks()
+    showProcessing()
+
     NOW_img.show()
     Dynamic_Island.config(text = "Display!", bg = "green4", font = ("Arial", 16), width = 80, height = 1)
     window.update_idletasks()
@@ -124,7 +111,7 @@ def display_img():
 # Adjust contrast/brightness of images by linearly
 def lin_adj(a, b):
     global NOW_img
-    new_img = ORIGNAL_open_img
+    new_img = NOW_img
     for i in range(NOW_img.size[0]):
         for j in range(NOW_img.size[1]):
             X = NOW_img.getpixel((i, j))  # x, y
@@ -132,10 +119,11 @@ def lin_adj(a, b):
             if X > 255:
                 X = 255
             new_img.putpixel((i, j), X)
+    
     NOW_img = new_img
-    new_img = ImageTk.PhotoImage(new_img)
-    lbl_PRESENT_img.configure(image = new_img)
-    lbl_PRESENT_img.image = new_img
+
+    photo_image = ImageTk.PhotoImage(NOW_img)
+    update_display_canvas(photo_image)
     #X = 1
     #global NOW_img
     #new_img = ImageEnhance.Brightness(NOW_img).enhance(a * X + b)
@@ -150,7 +138,7 @@ def lin_adj(a, b):
 # Adjust contrast/brightness of images by exponentially
 def exp_adj(a, b):
     global NOW_img
-    new_img = ORIGNAL_open_img
+    new_img = NOW_img
     for i in range(NOW_img.size[0]):
         for j in range(NOW_img.size[1]):
             X = NOW_img.getpixel((i, j))  # x, y
@@ -158,10 +146,11 @@ def exp_adj(a, b):
             if X > 255:
                 X = 255
             new_img.putpixel((i, j), X)
+    
     NOW_img = new_img
-    new_img = ImageTk.PhotoImage(new_img)
-    lbl_PRESENT_img.configure(image = new_img)
-    lbl_PRESENT_img.image = new_img
+
+    photo_image = ImageTk.PhotoImage(NOW_img)
+    update_display_canvas(photo_image)
     #X = 1
     #global NOW_img
     #new_img = ImageEnhance.Brightness(NOW_img).enhance(math.exp(a * X + b))
@@ -183,7 +172,7 @@ def log_adj(a, b):
         return
 
     global NOW_img
-    new_img = ORIGNAL_open_img
+    new_img = NOW_img
     for i in range(NOW_img.size[0]):
         for j in range(NOW_img.size[1]):
             X = NOW_img.getpixel((i, j))  # x, y
@@ -191,10 +180,11 @@ def log_adj(a, b):
             if X > 255:
                 X = 255
             new_img.putpixel((i, j), X)
+    
     NOW_img = new_img
-    new_img = ImageTk.PhotoImage(new_img)
-    lbl_PRESENT_img.configure(image = new_img)
-    lbl_PRESENT_img.image = new_img
+
+    photo_image = ImageTk.PhotoImage(NOW_img)
+    update_display_canvas(photo_image)
     #X = 1
     #global NOW_img
     #new_img = ImageEnhance.Brightness(NOW_img).enhance(math.log(a * X + b))
@@ -207,12 +197,16 @@ def log_adj(a, b):
     
 # Zoom in and shrink
 def resize_img(perc):
+
+    showProcessing()
+
     global NOW_img
     new_img = NOW_img.resize((NOW_img.size[0] * perc // 100, NOW_img.size[1] * perc // 100))
     NOW_img = new_img
     new_img = ImageTk.PhotoImage(new_img)
-    lbl_PRESENT_img.configure(image = new_img)
-    lbl_PRESENT_img.image = new_img
+
+    update_display_canvas(new_img)
+
     global Dynamic_Island
     Dynamic_Island.config(text = "Resize " + str(perc) + " %", bg = "DarkOrange", font = ("Arial", 14), width = 30, height = 2)
     window.update_idletasks()
@@ -911,13 +905,31 @@ def seg_fea_mask():
 ###############################################  on the window  ###############################################
 
 window = tk.Tk()
+window.title("Basic Digital Image Processing")
+Dynamic_Island = tk.Label(window, text = "Please open an image file first", bg = "gold", font = ("Arial", 16), width = 80, height = 2)
 
 
-window.title("GUI of hw3")
-Dynamic_Island = tk.Label(window, text = "A simple graphic user interface of PIL.", bg = "yellow", font = ("Arial", 16), width = 80, height = 2)
+                    ######  Define component ######
 
-                    ######  Define  ######
-                          
+        ### Canvas and scrollbars for displaying the current image
+
+# Create a frame for the canvas and scrollbars
+frame = tk.Frame(window)
+frame.grid(row=2, column=0, sticky='nw')
+
+# Create a canvas within the frame
+canvas = tk.Canvas(frame, bg='lightgrey', width=512, height=512)  # Adjust canvas size as needed
+canvas.grid(row=0, column=0, sticky='nw')
+
+# Add scrollbars to the canvas
+h_scroll = tk.Scrollbar(frame, orient='horizontal', command=canvas.xview)
+h_scroll.grid(row=1, column=0, sticky='ew')
+v_scroll = tk.Scrollbar(frame, orient='vertical', command=canvas.yview)
+v_scroll.grid(row=0, column=1, sticky='ns')
+canvas.configure(xscrollcommand=h_scroll.set, yscrollcommand=v_scroll.set)
+
+
+
         ### open / save / dispaly
 # Label
 lbl_open = tk.Label(window, text = "First step  ========  OPEN   ====   ==   = > ",font = ("Arial", 12))
@@ -925,11 +937,11 @@ lbl_save_dispaly = tk.Label(window, text = "Please enter a file name to Save / D
 # Entry
 entry_fileName = tk.Entry(window, width = 25)
 # Button
-btn_open = tk.Button(window, text = "Open a image", command = open_img)
+btn_open = tk.Button(window, text = "Open an image", command = open_img)
 btn_save = tk.Button(window, text = "Save image", command = save_img)
 btn_display = tk.Button(window, text = "Display image", command = display_img)
-        ### open .raw file
-btn_raw = tk.Button(window, text = "Open .raw file", command = open_raw)
+        ### open .raw image file
+btn_raw = tk.Button(window, text = "Open a .raw image", command = open_raw)
         ### Haruki reset!
 btn_reset = tk.Button(window, text = "Reset current image", command = reset_img)
         ### Display the histogram of images
@@ -1057,7 +1069,7 @@ lbl_save_dispaly.grid(row = 3, column = 0)
 entry_fileName.grid(row = 4, column = 0)
 btn_save.grid(row = 4, column = 1)
 btn_display.grid(row = 4, column = 2)
-# open .raw file
+# open .raw image file
 btn_raw.grid(row = 1, column = 2)
 # Haruki reset!
 btn_reset.grid(row = 2, column = 1)

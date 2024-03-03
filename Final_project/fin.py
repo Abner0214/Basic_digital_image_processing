@@ -79,12 +79,9 @@ def reset_img():
     Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
     global fileName
     window.update_idletasks()
-    if (fileName[-4:] != ".raw"):
-        image = PIL.Image.open(fileName)
-        wid, hei = image.size
+ 
     global NOW_img
     global ORIGNAL_open_img
-    ORIGNAL_open_img = Image.open(fileName)
     NOW_img = ORIGNAL_open_img
     NOW_img.show()
     
@@ -104,10 +101,12 @@ def open_img():
     
     Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
     window.update_idletasks()
+
     global fileName
     global NOW_img
     global ORIGNAL_open_img
     global ORIGNAL_img
+    
     fileName = filedialog.askopenfilename()
     ORIGNAL_open_img = Image.open(fileName)
     NOW_img = ORIGNAL_open_img.copy()
@@ -481,7 +480,7 @@ btn_save = tk.Button(window, text = "Save", command = save_img)
 # Label
 lbl_watermark = tk.Label(window, text = "Add a watermark : ")
 # Button
-NOW_img = Image.open(os.path.join("Image samples\Color\Lenna_512_color.tif"))
+NOW_img = Image.open(os.path.join("Image samples\Color image\Lenna_512_color.tif"))
 WATERMARK = Image.open(os.path.join("Image samples\Color wheel\color_wheel.png"))
 put_WATERMARK = Image.open(os.path.join("Image samples\Color wheel\color_wheel.png"))
 btn_cho_watermark = tk.Button(window, text = "Choice", command = open_watermark_img)
