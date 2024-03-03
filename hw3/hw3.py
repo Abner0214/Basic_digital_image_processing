@@ -6,9 +6,10 @@ from PIL import Image, ImageTk
 import matplotlib.pyplot as plt
 import numpy
 
-
 def update_display_canvas(photo_image):
-    canvas.create_image(0, 0, anchor='nw', image=photo_image)
+    global current_photo_image
+    current_photo_image = photo_image  # Store the reference globally
+    canvas.create_image(0, 0, anchor='nw', image=current_photo_image)
     canvas.config(scrollregion=canvas.bbox('all'))
 
 def showProcessing():
@@ -116,8 +117,8 @@ def lin_adj(a, b):
                 X = 255
             ORIGNAL_open_img_copy.putpixel((i, j), X)
 
-    photo_image = ImageTk.PhotoImage(ORIGNAL_open_img_copy)
-    update_display_canvas(photo_image)
+    Current_photo_image = ImageTk.PhotoImage(ORIGNAL_open_img_copy)
+    update_display_canvas(Current_photo_image)
     #X = 1
     #global ORIGNAL_open_img_copy
     #new_img = ImageEnhance.Brightness(ORIGNAL_open_img_copy).enhance(a * X + b)
@@ -182,9 +183,9 @@ def resize_img(perc):
     global ORIGNAL_open_img_copy
     new_img = ORIGNAL_open_img_copy.resize((ORIGNAL_open_img_copy.size[0] * perc // 100, ORIGNAL_open_img_copy.size[1] * perc // 100))
     ORIGNAL_open_img_copy = new_img
-    new_img = ImageTk.PhotoImage(new_img)
 
-    update_display_canvas(new_img)
+    photo_image = ImageTk.PhotoImage(new_img)
+    update_display_canvas(photo_image)
 
     global Dynamic_Island
     Dynamic_Island.config(text = "Resize " + str(perc) + " %", bg = "DarkOrange", font = ("Arial", 14), width = 30, height = 2)
@@ -192,12 +193,16 @@ def resize_img(perc):
 
 # Rotate 
 def rotate_img(degrees):
+
+    showProcessing()
+
     global ORIGNAL_open_img_copy
     new_img = ORIGNAL_open_img_copy.rotate(degrees, expand = "yes")
     ORIGNAL_open_img_copy = new_img
-    new_img = ImageTk.PhotoImage(new_img)
-    lbl_PRESENT_img.configure(image = new_img)
-    lbl_PRESENT_img.image = new_img
+
+    photo_image = ImageTk.PhotoImage(new_img)
+    update_display_canvas(photo_image)
+
     global Dynamic_Island
     if degrees > 0 :
         Dynamic_Island.config(text = "Rotate +" + str(degrees) + "°", bg = "DarkSlateGray3", font = ("Arial", 14), width = 50, height = 2)
