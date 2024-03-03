@@ -1,9 +1,7 @@
-import os
 import math
 from math import cos, radians , degrees , acos,sqrt
 import tkinter as tk
 from tkinter import filedialog
-import PIL
 from PIL import Image, ImageTk
 import matplotlib.pyplot as plt
 import numpy
@@ -22,19 +20,19 @@ def open_img():
     
     showProcessing()
     
-    global filePath
-    global NOW_img
+    global File_path
     global ORIGNAL_open_img
+    global ORIGNAL_open_img_copy
     global ORIGNAL_PhotoImage
     
-    filePath = filedialog.askopenfilename()
-    ORIGNAL_open_img = Image.open(filePath)
-    NOW_img = ORIGNAL_open_img.copy()
+    File_path = filedialog.askopenfilename(title = "Select an image file",)
+    ORIGNAL_open_img = Image.open(File_path)
+    ORIGNAL_open_img_copy = ORIGNAL_open_img.copy()
     ORIGNAL_PhotoImage = ImageTk.PhotoImage(ORIGNAL_open_img)
     
     update_display_canvas(ORIGNAL_PhotoImage)
     
-    nameStr = filePath.split("/")
+    nameStr = File_path.split("/")
     Dynamic_Island.config(text = "You open this image: " + nameStr[-1] , bg = "AntiqueWhite1", font = ("Arial", 16), width = 80, height = 2)
     window.update_idletasks()
 
@@ -43,24 +41,24 @@ def open_raw():
 
     showProcessing()
 
-    global filePath
-    global NOW_img
+    global File_path
+    global ORIGNAL_open_img_copy
     global ORIGNAL_open_img
     global ORIGNAL_PhotoImage
-    global lbl_PRESENT_img  # current image in the window
-    filePath = filedialog.askopenfilename(initialdir = "/", title = "Select a .raw image file",)
-    x = open(filePath,'rb')
+    
+    File_path = filedialog.askopenfilename(title = "Select a .raw image file",)
+    x = open(File_path,'rb')
     ORIGNAL_open_img = Image.frombytes("L", (512, 512), x.read(), 'raw')
-    NOW_img = ORIGNAL_open_img.copy()
+    ORIGNAL_open_img_copy = ORIGNAL_open_img.copy()
     ORIGNAL_PhotoImage = ImageTk.PhotoImage(ORIGNAL_open_img)
     
     update_display_canvas(ORIGNAL_PhotoImage)
 
-    nameStr = filePath.split("/")
+    nameStr = File_path.split("/")
     Dynamic_Island.config(text = "You open this .raw image file: " + nameStr[-1] , bg = "AntiqueWhite1", font = ("Arial", 16), width = 80, height = 2)
     window.update_idletasks()
 
-    if not filePath:
+    if not File_path:
         Dynamic_Island.config(text = "Fail to open this .raw image file" , bg = "AntiqueWhite1", font = ("Arial", 16), width = 80, height = 2)
         window.update_idletasks()
         return
@@ -69,18 +67,15 @@ def open_raw():
 def reset_img():
 
     showProcessing()
-
-    global filePath
-    global NOW_img
     global ORIGNAL_open_img
+    global ORIGNAL_open_img_copy
     global ORIGNAL_PhotoImage
 
-    NOW_img = ORIGNAL_open_img
+    ORIGNAL_open_img_copy = ORIGNAL_open_img.copy()
+    update_display_canvas(ORIGNAL_PhotoImage)
 
-    photo_image = ImageTk.PhotoImage(NOW_img)
-    update_display_canvas(photo_image)
-
-    nameStr = filePath.split("/")
+    global File_path
+    nameStr = File_path.split("/")
     Dynamic_Island.config(text = f"{nameStr[-1]} resetd! It looks like opened just now!", bg = "hot pink", font = ("Arial", 14), width = 60, height = 2)
     window.update_idletasks()
 
@@ -91,10 +86,10 @@ def save_img():
 
     newName = entry_fileName.get()
     if newName[-3:] == ".tif":
-        NOW_img.save(newName, "tiff")
+        ORIGNAL_open_img_copy.save(newName, "tiff")
         Dynamic_Island.config(text = "The image has been saved in the TIF format! Please check your folder!", bg = "aquamarine", font = ("Arial", 16), width = 80, height = 2)
     else:
-        NOW_img.save(newName, "JPEG")
+        ORIGNAL_open_img_copy.save(newName, "JPEG")
         Dynamic_Island.config(text = "The image has been saved in the JPG format! Please check your folder!", bg = "aquamarine", font = ("Arial", 16), width = 80, height = 2)
 
     window.update_idletasks()   
@@ -104,29 +99,28 @@ def display_img():
     
     showProcessing()
 
-    NOW_img.show()
+    global ORIGNAL_open_img_copy
+    ORIGNAL_open_img_copy.show()
+
     Dynamic_Island.config(text = "Display!", bg = "green4", font = ("Arial", 16), width = 80, height = 1)
     window.update_idletasks()
 
 # Adjust contrast/brightness of images by linearly
 def lin_adj(a, b):
-    global NOW_img
-    new_img = NOW_img
-    for i in range(NOW_img.size[0]):
-        for j in range(NOW_img.size[1]):
-            X = NOW_img.getpixel((i, j))  # x, y
+    global ORIGNAL_open_img_copy
+    for i in range(ORIGNAL_open_img_copy.size[0]):
+        for j in range(ORIGNAL_open_img_copy.size[1]):
+            X = ORIGNAL_open_img_copy.getpixel((i, j))  # x, y
             X = int(X * a + b)
             if X > 255:
                 X = 255
-            new_img.putpixel((i, j), X)
-    
-    NOW_img = new_img
+            ORIGNAL_open_img_copy.putpixel((i, j), X)
 
-    photo_image = ImageTk.PhotoImage(NOW_img)
+    photo_image = ImageTk.PhotoImage(ORIGNAL_open_img_copy)
     update_display_canvas(photo_image)
     #X = 1
-    #global NOW_img
-    #new_img = ImageEnhance.Brightness(NOW_img).enhance(a * X + b)
+    #global ORIGNAL_open_img_copy
+    #new_img = ImageEnhance.Brightness(ORIGNAL_open_img_copy).enhance(a * X + b)
 
     global Dynamic_Island
     Dynamic_Island.config(text = "Linearly adjust!", bg = "gold", font = ("Arial", 14), width = 45, height = 2)
@@ -134,23 +128,20 @@ def lin_adj(a, b):
     
 # Adjust contrast/brightness of images by exponentially
 def exp_adj(a, b):
-    global NOW_img
-    new_img = NOW_img
-    for i in range(NOW_img.size[0]):
-        for j in range(NOW_img.size[1]):
-            X = NOW_img.getpixel((i, j))  # x, y
+    global ORIGNAL_open_img_copy
+    for i in range(ORIGNAL_open_img_copy.size[0]):
+        for j in range(ORIGNAL_open_img_copy.size[1]):
+            X = ORIGNAL_open_img_copy.getpixel((i, j))  # x, y
             X = int(math.exp(X * a + b))
             if X > 255:
                 X = 255
-            new_img.putpixel((i, j), X)
-    
-    NOW_img = new_img
+            ORIGNAL_open_img_copy.putpixel((i, j), X)
 
-    photo_image = ImageTk.PhotoImage(NOW_img)
+    photo_image = ImageTk.PhotoImage(ORIGNAL_open_img_copy)
     update_display_canvas(photo_image)
     #X = 1
-    #global NOW_img
-    #new_img = ImageEnhance.Brightness(NOW_img).enhance(math.exp(a * X + b))
+    #global ORIGNAL_open_img_copy
+    #new_img = ImageEnhance.Brightness(ORIGNAL_open_img_copy).enhance(math.exp(a * X + b))
 
     global Dynamic_Island
     Dynamic_Island.config(text = "Exponentially adjust!", bg = "SeaGreen", font = ("Arial", 14), width = 30, height = 2)
@@ -165,23 +156,20 @@ def log_adj(a, b):
         print("[ERROR]: b msut > 1")
         return
 
-    global NOW_img
-    new_img = NOW_img
-    for i in range(NOW_img.size[0]):
-        for j in range(NOW_img.size[1]):
-            X = NOW_img.getpixel((i, j))  # x, y
+    global ORIGNAL_open_img_copy
+    for i in range(ORIGNAL_open_img_copy.size[0]):
+        for j in range(ORIGNAL_open_img_copy.size[1]):
+            X = ORIGNAL_open_img_copy.getpixel((i, j))  # x, y
             X = int(math.log(X * a + b))
             if X > 255:
                 X = 255
-            new_img.putpixel((i, j), X)
-    
-    NOW_img = new_img
+            ORIGNAL_open_img_copy.putpixel((i, j), X)
 
-    photo_image = ImageTk.PhotoImage(NOW_img)
+    photo_image = ImageTk.PhotoImage(ORIGNAL_open_img_copy)
     update_display_canvas(photo_image)
     #X = 1
-    #global NOW_img
-    #new_img = ImageEnhance.Brightness(NOW_img).enhance(math.log(a * X + b))
+    #global ORIGNAL_open_img_copy
+    #new_img = ImageEnhance.Brightness(ORIGNAL_open_img_copy).enhance(math.log(a * X + b))
 
     Dynamic_Island.config(text = "Logarithmically adjust!", bg = "firebrick", font = ("Arial", 14), width = 40, height = 2)
     window.update_idletasks()
@@ -191,9 +179,9 @@ def resize_img(perc):
 
     showProcessing()
 
-    global NOW_img
-    new_img = NOW_img.resize((NOW_img.size[0] * perc // 100, NOW_img.size[1] * perc // 100))
-    NOW_img = new_img
+    global ORIGNAL_open_img_copy
+    new_img = ORIGNAL_open_img_copy.resize((ORIGNAL_open_img_copy.size[0] * perc // 100, ORIGNAL_open_img_copy.size[1] * perc // 100))
+    ORIGNAL_open_img_copy = new_img
     new_img = ImageTk.PhotoImage(new_img)
 
     update_display_canvas(new_img)
@@ -204,9 +192,9 @@ def resize_img(perc):
 
 # Rotate 
 def rotate_img(degrees):
-    global NOW_img
-    new_img = NOW_img.rotate(degrees, expand = "yes")
-    NOW_img = new_img
+    global ORIGNAL_open_img_copy
+    new_img = ORIGNAL_open_img_copy.rotate(degrees, expand = "yes")
+    ORIGNAL_open_img_copy = new_img
     new_img = ImageTk.PhotoImage(new_img)
     lbl_PRESENT_img.configure(image = new_img)
     lbl_PRESENT_img.image = new_img
@@ -219,17 +207,17 @@ def rotate_img(degrees):
     
 # Gray-level slicing
 def gray_lvl_slc(lowerbound, upperbound, keep = True):
-    global NOW_img
-    new_img = Image.new("L", (NOW_img.size[0], NOW_img.size[1]))
-    for i in range(NOW_img.size[0]):
-        for j in range(NOW_img.size[1]):
-            val = NOW_img.getpixel((i, j))  # x, y
+    global ORIGNAL_open_img_copy
+    new_img = Image.new("L", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
+    for i in range(ORIGNAL_open_img_copy.size[0]):
+        for j in range(ORIGNAL_open_img_copy.size[1]):
+            val = ORIGNAL_open_img_copy.getpixel((i, j))  # x, y
             if (val >= lowerbound and val <= upperbound):
                 val = 255
             elif(not keep):
                 val = 0
             new_img.putpixel((i, j), val)
-    NOW_img = new_img
+    ORIGNAL_open_img_copy = new_img
     new_img = ImageTk.PhotoImage(new_img)
     lbl_PRESENT_img.configure(image = new_img)
     lbl_PRESENT_img.image = new_img
@@ -252,7 +240,7 @@ def display_htg():
 
     Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
     window.update_idletasks()    
-    img = NOW_img
+    img = ORIGNAL_open_img_copy
     pixels = []
     for x in range(256):
         pixels.append(x)
@@ -275,26 +263,26 @@ def auto_level():
     max_gray_lv = 256
     all_lv = [0] * 256
     temp = [0] * 256
-    global NOW_img
-    new_img = Image.new("L", (NOW_img.size[0], NOW_img.size[1]))
-    for i in range(NOW_img.size[0]):
-        for j in range(NOW_img.size[1]):
-            X = NOW_img.getpixel((i, j))
+    global ORIGNAL_open_img_copy
+    new_img = Image.new("L", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
+    for i in range(ORIGNAL_open_img_copy.size[0]):
+        for j in range(ORIGNAL_open_img_copy.size[1]):
+            X = ORIGNAL_open_img_copy.getpixel((i, j))
             if (X > max_gray_lv):
                 max_gray_lv = X
-            all_lv[X] += 1 / (NOW_img.size[0] * NOW_img.size[1])
+            all_lv[X] += 1 / (ORIGNAL_open_img_copy.size[0] * ORIGNAL_open_img_copy.size[1])
             temp[X] = all_lv[X]
     
     for i in range(1, 255):
         for j in range(0, i-1):
             all_lv[i] += temp[j]
 
-    for i in range(NOW_img.size[0]):
-        for j in range(NOW_img.size[1]):
-            X = NOW_img.getpixel((i, j))
+    for i in range(ORIGNAL_open_img_copy.size[0]):
+        for j in range(ORIGNAL_open_img_copy.size[1]):
+            X = ORIGNAL_open_img_copy.getpixel((i, j))
             new_img.putpixel((i, j), int(all_lv[X] * max_gray_lv))
     
-    NOW_img = new_img
+    ORIGNAL_open_img_copy = new_img
     new_img = ImageTk.PhotoImage(new_img)
     lbl_PRESENT_img.configure(image = new_img)
     lbl_PRESENT_img.image = new_img
@@ -308,12 +296,12 @@ def bit_plane():
 
     Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
     window.update_idletasks()
-    global NOW_img
-    new_img = Image.new("L", (NOW_img.size[0], NOW_img.size[1]))
-    for i in range(NOW_img.size[0]):
-        for j in range(NOW_img.size[1]):
+    global ORIGNAL_open_img_copy
+    new_img = Image.new("L", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
+    for i in range(ORIGNAL_open_img_copy.size[0]):
+        for j in range(ORIGNAL_open_img_copy.size[1]):
             temp = plane
-            val = NOW_img.getpixel((i, j))#x,y
+            val = ORIGNAL_open_img_copy.getpixel((i, j))#x,y
             while(temp>0):
                 val//=2
                 temp-=1
@@ -322,7 +310,7 @@ def bit_plane():
             else:
                 val = 0
             new_img.putpixel((i, j), val)
-    NOW_img = new_img
+    ORIGNAL_open_img_copy = new_img
     new_img = ImageTk.PhotoImage(new_img)
     lbl_PRESENT_img.configure(image = new_img)
     lbl_PRESENT_img.image = new_img
@@ -336,24 +324,24 @@ def smoothing():
     Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
     window.update_idletasks()
     degree = int(entry_degree.get())
-    global NOW_img
-    new_img = Image.new("L", (NOW_img.size[0], NOW_img.size[1]))
-    for i in range(NOW_img.size[0]):
-        for j in range(NOW_img.size[1]):
+    global ORIGNAL_open_img_copy
+    new_img = Image.new("L", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
+    for i in range(ORIGNAL_open_img_copy.size[0]):
+        for j in range(ORIGNAL_open_img_copy.size[1]):
             pixel_sum = 0
             pixel_count = 0
             for k in range(degree*degree):
                 row = i + k / degree - degree/2
                 col = j + k % degree - degree/2
-                if(row < 0  or  col < 0  or  row >= NOW_img.size[0]  or  col >= NOW_img.size[1]):
+                if(row < 0  or  col < 0  or  row >= ORIGNAL_open_img_copy.size[0]  or  col >= ORIGNAL_open_img_copy.size[1]):
                     continue
-                pixel_sum += NOW_img.getpixel((row,col))
+                pixel_sum += ORIGNAL_open_img_copy.getpixel((row,col))
                 pixel_count += 1
             if (pixel_count == 0):
                 pixel_count = 1
             new_img.putpixel((i, j), round(pixel_sum / pixel_count))
 
-    NOW_img = new_img
+    ORIGNAL_open_img_copy = new_img
     new_img = ImageTk.PhotoImage(new_img)
     lbl_PRESENT_img.configure(image = new_img)
     lbl_PRESENT_img.image = new_img
@@ -373,16 +361,16 @@ def sharpening():
         return
     Dynamic_Island.config(text = "Processing ...", bg = "Green3", font = ("Arial", 14), width = 50, height = 2)
     window.update_idletasks()
-    global NOW_img
-    temp_img = NOW_img.copy()
+    global ORIGNAL_open_img_copy
+    temp_img = ORIGNAL_open_img_copy.copy()
     
-    smoothing()#now now_img is being average filtered
-    new_img = Image.new("L", (NOW_img.size[0], NOW_img.size[1]))
-    for i in range(NOW_img.size[0]):
-        for j in range(NOW_img.size[1]):
-            new_img.putpixel((i, j),(k+1)*int(temp_img.getpixel((i,j))) - int(k*NOW_img.getpixel((i,j))))
+    smoothing()#now ORIGNAL_open_img_copy is being average filtered
+    new_img = Image.new("L", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
+    for i in range(ORIGNAL_open_img_copy.size[0]):
+        for j in range(ORIGNAL_open_img_copy.size[1]):
+            new_img.putpixel((i, j),(k+1)*int(temp_img.getpixel((i,j))) - int(k*ORIGNAL_open_img_copy.getpixel((i,j))))
 
-    NOW_img = new_img
+    ORIGNAL_open_img_copy = new_img
     new_img = ImageTk.PhotoImage(new_img)
     lbl_PRESENT_img.configure(image = new_img)
     lbl_PRESENT_img.image = new_img
@@ -395,22 +383,22 @@ def median():
     Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
     window.update_idletasks()
     degree = int(entry_degree.get())
-    global NOW_img
-    new_img = Image.new("L", (NOW_img.size[0], NOW_img.size[1]))
-    for i in range(NOW_img.size[0]):
-        for j in range(NOW_img.size[1]):
+    global ORIGNAL_open_img_copy
+    new_img = Image.new("L", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
+    for i in range(ORIGNAL_open_img_copy.size[0]):
+        for j in range(ORIGNAL_open_img_copy.size[1]):
             all_pixel = []
             for k in range(degree * degree):
                 row = i + int(k / degree) - int(degree / 2)
                 col = j + int(k % degree) - int(degree / 2)
-                if(row < 0 or col < 0 or row >= NOW_img.size[0] or col >= NOW_img.size[1]):
+                if(row < 0 or col < 0 or row >= ORIGNAL_open_img_copy.size[0] or col >= ORIGNAL_open_img_copy.size[1]):
                     continue
-                all_pixel.append(NOW_img.getpixel((row, col)))
+                all_pixel.append(ORIGNAL_open_img_copy.getpixel((row, col)))
             all_pixel.sort()
             new_img.putpixel((i, j), all_pixel[int(len(all_pixel) / 2)])
             del all_pixel
     
-    NOW_img = new_img
+    ORIGNAL_open_img_copy = new_img
     new_img = ImageTk.PhotoImage(new_img)
     lbl_PRESENT_img.configure(image = new_img)
     lbl_PRESENT_img.image = new_img
@@ -423,23 +411,23 @@ def Laplacian():
     Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
     window.update_idletasks()
 
-    global NOW_img
-    new_img = Image.new("L", (NOW_img.size[0], NOW_img.size[1]))
-    for i in range(NOW_img.size[0]):
-        for j in range(NOW_img.size[1]):
+    global ORIGNAL_open_img_copy
+    new_img = Image.new("L", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
+    for i in range(ORIGNAL_open_img_copy.size[0]):
+        for j in range(ORIGNAL_open_img_copy.size[1]):
             sum_pixel = 0
             for k in range(9):
                 row = i + int(k / 3) - int(3 / 2)
                 col = j + int(k % 3) - int(3 / 2)
-                if(row < 0  or  col < 0  or  row >= NOW_img.size[0]  or  col >= NOW_img.size[1]):
+                if(row < 0  or  col < 0  or  row >= ORIGNAL_open_img_copy.size[0]  or  col >= ORIGNAL_open_img_copy.size[1]):
                     continue
                 elif(k==4):
-                    sum_pixel -= NOW_img.getpixel((row,col))*8
+                    sum_pixel -= ORIGNAL_open_img_copy.getpixel((row,col))*8
                 else:
-                    sum_pixel += NOW_img.getpixel((row,col))
-            new_img.putpixel((i, j), NOW_img.getpixel((i,j))-(sum_pixel))
+                    sum_pixel += ORIGNAL_open_img_copy.getpixel((row,col))
+            new_img.putpixel((i, j), ORIGNAL_open_img_copy.getpixel((i,j))-(sum_pixel))
             
-    NOW_img = new_img
+    ORIGNAL_open_img_copy = new_img
     new_img = ImageTk.PhotoImage(new_img)
     lbl_PRESENT_img.configure(image = new_img)
     lbl_PRESENT_img.image = new_img
@@ -454,12 +442,12 @@ def log_mag_pha_img():
     Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
     window.update_idletasks()
 
-    global NOW_img
+    global ORIGNAL_open_img_copy
     a = []
-    for i in range(NOW_img.size[0]):
+    for i in range(ORIGNAL_open_img_copy.size[0]):
         temp = []
-        for j in range(NOW_img.size[1]):
-            temp.append(NOW_img.getpixel((i, j)))
+        for j in range(ORIGNAL_open_img_copy.size[1]):
+            temp.append(ORIGNAL_open_img_copy.getpixel((i, j)))
         a.append(temp)
         del temp
     b = numpy.array(a)
@@ -516,15 +504,15 @@ def log_mag_pha_img():
 def step1_5():
     Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
     window.update_idletasks()
-    global NOW_img
+    global ORIGNAL_open_img_copy
     a = []
-    for i in range(NOW_img.size[0]):
+    for i in range(ORIGNAL_open_img_copy.size[0]):
         temp = []
-        for j in range(NOW_img.size[1]):
+        for j in range(ORIGNAL_open_img_copy.size[1]):
             if((i+j)%2==0):
-                temp.append(NOW_img.getpixel((i, j)))
+                temp.append(ORIGNAL_open_img_copy.getpixel((i, j)))
             else:
-                temp.append(NOW_img.getpixel((i, j))*-1)
+                temp.append(ORIGNAL_open_img_copy.getpixel((i, j))*-1)
         a.append(temp)
         del temp
     step1 = numpy.array(a)
@@ -536,8 +524,8 @@ def step1_5():
     step4 = numpy.fft.ifft2(step4)
     
     step5 = step4
-    for i in range(NOW_img.size[0]):
-        for j in range(NOW_img.size[1]):
+    for i in range(ORIGNAL_open_img_copy.size[0]):
+        for j in range(ORIGNAL_open_img_copy.size[1]):
             if((i+j)%2==1):
                 step5[i][j]*=-1
     
@@ -549,7 +537,7 @@ def step1_5():
     step4 = numpy.transpose(numpy.log(numpy.abs(step4))*20)
     step5 = numpy.transpose(numpy.real(step5))
     ax[0, 0].title.set_text("Original image")
-    ax[0, 0].imshow(NOW_img, interpolation="none",cmap="gray",vmin=0,vmax=255)
+    ax[0, 0].imshow(ORIGNAL_open_img_copy, interpolation="none",cmap="gray",vmin=0,vmax=255)
     ax[0, 1].title.set_text("Step. (1)")
     ax[0, 1].imshow(step1, interpolation="none",cmap="gray",vmin=0,vmax=255)
     ax[0, 2].title.set_text("Step. (2)")
@@ -573,16 +561,16 @@ def step1_5():
 def red_img():
     Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
     window.update_idletasks()
-    global NOW_img
+    global ORIGNAL_open_img_copy
 
-    split_img = Image.Image.split(NOW_img)
-    new_img = Image.new("RGB", (NOW_img.size[0], NOW_img.size[1]))
-    for i in range(NOW_img.size[0]):
-        for j in range(NOW_img.size[1]):
+    split_img = Image.Image.split(ORIGNAL_open_img_copy)
+    new_img = Image.new("RGB", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
+    for i in range(ORIGNAL_open_img_copy.size[0]):
+        for j in range(ORIGNAL_open_img_copy.size[1]):
             r = split_img[0].getpixel((i, j))
             new_img.putpixel((i, j), (r, 0, 0))
             
-    NOW_img = new_img
+    ORIGNAL_open_img_copy = new_img
     new_img = ImageTk.PhotoImage(new_img)
     lbl_PRESENT_img.configure(image = new_img)
     lbl_PRESENT_img.image = new_img
@@ -593,16 +581,16 @@ def red_img():
 def green_img():
     Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
     window.update_idletasks()
-    global NOW_img
+    global ORIGNAL_open_img_copy
 
-    split_img = Image.Image.split(NOW_img)
-    new_img = Image.new("RGB", (NOW_img.size[0], NOW_img.size[1]))
-    for i in range(NOW_img.size[0]):
-        for j in range(NOW_img.size[1]):
+    split_img = Image.Image.split(ORIGNAL_open_img_copy)
+    new_img = Image.new("RGB", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
+    for i in range(ORIGNAL_open_img_copy.size[0]):
+        for j in range(ORIGNAL_open_img_copy.size[1]):
             g = split_img[1].getpixel((i, j))
             new_img.putpixel((i, j), (0, g, 0))
             
-    NOW_img = new_img
+    ORIGNAL_open_img_copy = new_img
     new_img = ImageTk.PhotoImage(new_img)
     lbl_PRESENT_img.configure(image = new_img)
     lbl_PRESENT_img.image = new_img
@@ -613,16 +601,16 @@ def green_img():
 def blue_img():
     Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
     window.update_idletasks()
-    global NOW_img
+    global ORIGNAL_open_img_copy
 
-    split_img = Image.Image.split(NOW_img)
-    new_img = Image.new("RGB", (NOW_img.size[0], NOW_img.size[1]))
-    for i in range(NOW_img.size[0]):
-        for j in range(NOW_img.size[1]):
+    split_img = Image.Image.split(ORIGNAL_open_img_copy)
+    new_img = Image.new("RGB", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
+    for i in range(ORIGNAL_open_img_copy.size[0]):
+        for j in range(ORIGNAL_open_img_copy.size[1]):
             b = split_img[2].getpixel((i, j))
             new_img.putpixel((i, j), (0, 0, b))
             
-    NOW_img = new_img
+    ORIGNAL_open_img_copy = new_img
     new_img = ImageTk.PhotoImage(new_img)
     lbl_PRESENT_img.configure(image = new_img)
     lbl_PRESENT_img.image = new_img
@@ -692,14 +680,14 @@ def hsi_to_rgb(h, s, i):
 def rgb_to_h_s_i_subplot():
     Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
     window.update_idletasks()
-    global NOW_img
+    global ORIGNAL_open_img_copy
 
-    split_img = Image.Image.split(NOW_img)
-    h_img = Image.new("L", (NOW_img.size[0], NOW_img.size[1]))
-    s_img = Image.new("L", (NOW_img.size[0], NOW_img.size[1]))
-    i_img = Image.new("L", (NOW_img.size[0], NOW_img.size[1]))
-    for i in range(NOW_img.size[0]):
-        for j in range(NOW_img.size[1]):
+    split_img = Image.Image.split(ORIGNAL_open_img_copy)
+    h_img = Image.new("L", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
+    s_img = Image.new("L", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
+    i_img = Image.new("L", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
+    for i in range(ORIGNAL_open_img_copy.size[0]):
+        for j in range(ORIGNAL_open_img_copy.size[1]):
             R = split_img[0].getpixel((i, j))
             G = split_img[1].getpixel((i, j))
             B = split_img[2].getpixel((i, j))
@@ -711,7 +699,7 @@ def rgb_to_h_s_i_subplot():
     fig,ax = plt.subplots(1,4)
     
     ax[0].title.set_text("Original image")
-    ax[0].imshow(NOW_img, interpolation="none",cmap="gray",vmin=0,vmax=255)
+    ax[0].imshow(ORIGNAL_open_img_copy, interpolation="none",cmap="gray",vmin=0,vmax=255)
     ax[1].title.set_text("Hue")
     ax[1].imshow(h_img, interpolation="none",cmap="gray",vmin=0,vmax=255)
     ax[2].title.set_text("Saturation")
@@ -731,18 +719,18 @@ def rgb_to_h_s_i_subplot():
 def rgb_complements():
     Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
     window.update_idletasks()
-    global NOW_img
+    global ORIGNAL_open_img_copy
     
-    split_img = Image.Image.split(NOW_img)
-    new_img = Image.new("RGB", (NOW_img.size[0], NOW_img.size[1]))
-    for i in range(NOW_img.size[0]):
-        for j in range(NOW_img.size[1]):
+    split_img = Image.Image.split(ORIGNAL_open_img_copy)
+    new_img = Image.new("RGB", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
+    for i in range(ORIGNAL_open_img_copy.size[0]):
+        for j in range(ORIGNAL_open_img_copy.size[1]):
             r = split_img[0].getpixel((i, j))
             g = split_img[1].getpixel((i, j))
             b = split_img[2].getpixel((i, j))
             new_img.putpixel((i, j), (255 - r, 255 - g, 255 - b))
             
-    NOW_img = new_img
+    ORIGNAL_open_img_copy = new_img
     new_img = ImageTk.PhotoImage(new_img)
     lbl_PRESENT_img.configure(image = new_img)
     lbl_PRESENT_img.image = new_img
@@ -752,16 +740,16 @@ def rgb_complements():
 def rgb_hsi_sharping():
     Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
     window.update_idletasks()
-    global NOW_img
+    global ORIGNAL_open_img_copy
 
     degree = 5
 
-    split_img = Image.Image.split(NOW_img)
-    smoothing_img = Image.new("RGB", (NOW_img.size[0], NOW_img.size[1]))
-    I_smoothing_img = Image.new("RGB", (NOW_img.size[0], NOW_img.size[1]))
+    split_img = Image.Image.split(ORIGNAL_open_img_copy)
+    smoothing_img = Image.new("RGB", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
+    I_smoothing_img = Image.new("RGB", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
     # smoothing
-    for i in range(NOW_img.size[0]):
-        for j in range(NOW_img.size[1]):
+    for i in range(ORIGNAL_open_img_copy.size[0]):
+        for j in range(ORIGNAL_open_img_copy.size[1]):
             R_sum = 0
             G_sum = 0
             B_sum = 0
@@ -770,7 +758,7 @@ def rgb_hsi_sharping():
             for k in range(degree*degree):
                 row = i + k / degree - degree/2
                 col = j + k % degree - degree/2
-                if(row < 0  or  col < 0  or  row >= NOW_img.size[0]  or  col >= NOW_img.size[1]):
+                if(row < 0  or  col < 0  or  row >= ORIGNAL_open_img_copy.size[0]  or  col >= ORIGNAL_open_img_copy.size[1]):
                     continue
                 R_sum += split_img[0].getpixel((row,col))
                 G_sum += split_img[1].getpixel((row,col))
@@ -785,12 +773,12 @@ def rgb_hsi_sharping():
             I_smoothing_img.putpixel((i, j), (round(r), round(g), round(b)))
     
     # RGB Laplacian # HSI Laplacian
-    RGB_Lap_img = Image.new("RGB", (NOW_img.size[0], NOW_img.size[1]))
-    HSI_Lap_img = Image.new("RGB", (NOW_img.size[0], NOW_img.size[1]))
+    RGB_Lap_img = Image.new("RGB", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
+    HSI_Lap_img = Image.new("RGB", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
     split_smoothing_img = Image.Image.split(smoothing_img)
     split_I_smoothing_img = Image.Image.split(smoothing_img)
-    for i in range(NOW_img.size[0]):
-        for j in range(NOW_img.size[1]):
+    for i in range(ORIGNAL_open_img_copy.size[0]):
+        for j in range(ORIGNAL_open_img_copy.size[1]):
             r_sum = 0
             g_sum = 0
             b_sum = 0
@@ -801,7 +789,7 @@ def rgb_hsi_sharping():
             for k in range(9):
                 row = i + int(k / 3) - int(3 / 2)
                 col = j + int(k % 3) - int(3 / 2)
-                if(row < 0  or  col < 0  or  row >= NOW_img.size[0]  or  col >= NOW_img.size[1]):
+                if(row < 0  or  col < 0  or  row >= ORIGNAL_open_img_copy.size[0]  or  col >= ORIGNAL_open_img_copy.size[1]):
                     continue
                 elif(k==4):
                     r_sum -= split_smoothing_img[0].getpixel((row,col))*8
@@ -834,7 +822,7 @@ def rgb_hsi_sharping():
     fig, ax = plt.subplots(1,3)
     
     ax[0].title.set_text("Original image")
-    ax[0].imshow(NOW_img, interpolation="none",cmap="gray",vmin=0,vmax=255)
+    ax[0].imshow(ORIGNAL_open_img_copy, interpolation="none",cmap="gray",vmin=0,vmax=255)
     ax[1].title.set_text("RGB Laplacian")
     ax[1].imshow(RGB_Lap_img, interpolation="none",cmap="gray",vmin=0,vmax=255)
     ax[2].title.set_text("HSI Laplacian")
@@ -853,22 +841,22 @@ def seg_fea_mask():
     
     Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
     window.update_idletasks()
-    global NOW_img
+    global ORIGNAL_open_img_copy
 
-    split_img = Image.Image.split(NOW_img)
-    feathers_img = Image.new("RGB", (NOW_img.size[0], NOW_img.size[1]))
-    H_img = Image.new("L", (NOW_img.size[0], NOW_img.size[1]))
-    S_img = Image.new("L", (NOW_img.size[0], NOW_img.size[1]))
+    split_img = Image.Image.split(ORIGNAL_open_img_copy)
+    feathers_img = Image.new("RGB", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
+    H_img = Image.new("L", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
+    S_img = Image.new("L", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
 
-    for i in range (NOW_img.size[0]):
-        for j in range (NOW_img.size[1]):
+    for i in range (ORIGNAL_open_img_copy.size[0]):
+        for j in range (ORIGNAL_open_img_copy.size[1]):
             r = split_img[0].getpixel((i, j))
             g = split_img[1].getpixel((i, j))
             b = split_img[2].getpixel((i, j))
             H, S, I = rgb_to_hsi(r, g, b)
             H_img.putpixel((i, j), round(H/360*255))
             S_img.putpixel((i, j), round(S*255))
-            if (325 > H > 250  and NOW_img.size[0] * 0.1 < i < NOW_img.size[0] * 0.6):
+            if (325 > H > 250  and ORIGNAL_open_img_copy.size[0] * 0.1 < i < ORIGNAL_open_img_copy.size[0] * 0.6):
                 feathers_img.putpixel((i, j), (r, g, b))
             else:
                 feathers_img.putpixel((i, j), (0, 0, 0))
@@ -876,7 +864,7 @@ def seg_fea_mask():
     fig, ax = plt.subplots(1,4)
     
     ax[0].title.set_text("Original image")
-    ax[0].imshow(NOW_img, interpolation="none",cmap="gray",vmin=0,vmax=255)
+    ax[0].imshow(ORIGNAL_open_img_copy, interpolation="none",cmap="gray",vmin=0,vmax=255)
     ax[1].title.set_text("Hue")
     ax[1].imshow(H_img, interpolation="none",cmap="gray",vmin=0,vmax=255)
     ax[2].title.set_text("Saturation")
