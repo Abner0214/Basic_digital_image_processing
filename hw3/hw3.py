@@ -117,8 +117,8 @@ def lin_adj(a, b):
                 X = 255
             ORIGNAL_open_img_copy.putpixel((i, j), X)
 
-    Current_photo_image = ImageTk.PhotoImage(ORIGNAL_open_img_copy)
-    update_display_canvas(Current_photo_image)
+    photo_image = ImageTk.PhotoImage(ORIGNAL_open_img_copy)
+    update_display_canvas(photo_image)
     #X = 1
     #global ORIGNAL_open_img_copy
     #new_img = ImageEnhance.Brightness(ORIGNAL_open_img_copy).enhance(a * X + b)
