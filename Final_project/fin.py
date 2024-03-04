@@ -137,7 +137,7 @@ def open_raw():
     global ORIGNAL_open_img
     global ORIGNAL_img
 
-    fileName = filedialog.askopenfilename(title = "Select a .raw file",)
+    fileName = filedialog.askopenfilename(title = "Select a .raw image file",)
     x = open(fileName,'rb')
     ORIGNAL_open_img = Image.frombytes("L", (512, 512), x.read(), 'raw')
     NOW_img = ORIGNAL_open_img
