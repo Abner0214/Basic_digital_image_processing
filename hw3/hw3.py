@@ -185,7 +185,6 @@ def resize_img(perc):
     global ORIGNAL_open_img_copy
     new_img = ORIGNAL_open_img_copy.resize((ORIGNAL_open_img_copy.size[0] * perc // 100, ORIGNAL_open_img_copy.size[1] * perc // 100))
     ORIGNAL_open_img_copy = new_img
-
     photo_image = ImageTk.PhotoImage(new_img)
     update_display_canvas(photo_image)
 
@@ -201,7 +200,6 @@ def rotate_img(degrees):
     global ORIGNAL_open_img_copy
     new_img = ORIGNAL_open_img_copy.rotate(degrees, expand = "yes")
     ORIGNAL_open_img_copy = new_img
-
     photo_image = ImageTk.PhotoImage(new_img)
     update_display_canvas(photo_image)
 
@@ -224,10 +222,11 @@ def gray_lvl_slc(lowerbound, upperbound, keep = True):
             elif(not keep):
                 val = 0
             new_img.putpixel((i, j), val)
+
     ORIGNAL_open_img_copy = new_img
-    new_img = ImageTk.PhotoImage(new_img)
-    lbl_PRESENT_img.configure(image = new_img)
-    lbl_PRESENT_img.image = new_img
+    photo_image = ImageTk.PhotoImage(new_img)
+    update_display_canvas(photo_image)
+
     global Dynamic_Island
     Dynamic_Island.config(text = "Gray-level slicing ", bg = "dim grey", font = ("Arial", 14), width = 60, height = 2)
     window.update_idletasks()
@@ -290,9 +289,9 @@ def auto_level():
             new_img.putpixel((i, j), int(all_lv[X] * max_gray_lv))
     
     ORIGNAL_open_img_copy = new_img
-    new_img = ImageTk.PhotoImage(new_img)
-    lbl_PRESENT_img.configure(image = new_img)
-    lbl_PRESENT_img.image = new_img
+    photo_image = ImageTk.PhotoImage(new_img)
+    update_display_canvas(photo_image)
+
     Dynamic_Island.config(text = "Histogram equlization!", bg = "gold", font = ("Arial", 14), width = 80, height = 2)
     window.update_idletasks()
 
@@ -317,10 +316,10 @@ def bit_plane():
             else:
                 val = 0
             new_img.putpixel((i, j), val)
+    
     ORIGNAL_open_img_copy = new_img
-    new_img = ImageTk.PhotoImage(new_img)
-    lbl_PRESENT_img.configure(image = new_img)
-    lbl_PRESENT_img.image = new_img
+    photo_image = ImageTk.PhotoImage(new_img)
+    update_display_canvas(photo_image)
 
     Dynamic_Island.config(text = "Display bit-plane: " + str(plane), bg = "gold", font = ("Arial", 14), width = 80, height = 2)
     window.update_idletasks()
@@ -349,9 +348,8 @@ def smoothing():
             new_img.putpixel((i, j), round(pixel_sum / pixel_count))
 
     ORIGNAL_open_img_copy = new_img
-    new_img = ImageTk.PhotoImage(new_img)
-    lbl_PRESENT_img.configure(image = new_img)
-    lbl_PRESENT_img.image = new_img
+    photo_image = ImageTk.PhotoImage(new_img)
+    update_display_canvas(photo_image)
     
     Dynamic_Island.config(text = "Smoothing!", bg = "gold", font = ("Arial", 14), width = 80, height = 2)
     window.update_idletasks()
@@ -378,9 +376,9 @@ def sharpening():
             new_img.putpixel((i, j),(k+1)*int(temp_img.getpixel((i,j))) - int(k*ORIGNAL_open_img_copy.getpixel((i,j))))
 
     ORIGNAL_open_img_copy = new_img
-    new_img = ImageTk.PhotoImage(new_img)
-    lbl_PRESENT_img.configure(image = new_img)
-    lbl_PRESENT_img.image = new_img
+    photo_image = ImageTk.PhotoImage(new_img)
+    update_display_canvas(photo_image)
+
     Dynamic_Island.config(text = "Sharpening!", bg = "DarkSlateGray3", font = ("Arial", 14), width = 80, height = 2)
     window.update_idletasks()
 
@@ -406,9 +404,9 @@ def median():
             del all_pixel
     
     ORIGNAL_open_img_copy = new_img
-    new_img = ImageTk.PhotoImage(new_img)
-    lbl_PRESENT_img.configure(image = new_img)
-    lbl_PRESENT_img.image = new_img
+    photo_image = ImageTk.PhotoImage(new_img)
+    update_display_canvas(photo_image)
+
     Dynamic_Island.config(text = "Median filter!", bg = "DarkSlateGray3", font = ("Arial", 14), width = 80, height = 2)
     window.update_idletasks()
 
@@ -435,9 +433,9 @@ def Laplacian():
             new_img.putpixel((i, j), ORIGNAL_open_img_copy.getpixel((i,j))-(sum_pixel))
             
     ORIGNAL_open_img_copy = new_img
-    new_img = ImageTk.PhotoImage(new_img)
-    lbl_PRESENT_img.configure(image = new_img)
-    lbl_PRESENT_img.image = new_img
+    photo_image = ImageTk.PhotoImage(new_img)
+    update_display_canvas(photo_image)
+
     Dynamic_Island.config(text = "Wearing Laplacian mask!", bg = "DarkSlateGray3", font = ("Arial", 14), width = 80, height = 2)
     window.update_idletasks()
 
@@ -578,9 +576,9 @@ def red_img():
             new_img.putpixel((i, j), (r, 0, 0))
             
     ORIGNAL_open_img_copy = new_img
-    new_img = ImageTk.PhotoImage(new_img)
-    lbl_PRESENT_img.configure(image = new_img)
-    lbl_PRESENT_img.image = new_img
+    photo_image = ImageTk.PhotoImage(new_img)
+    update_display_canvas(photo_image)
+
     Dynamic_Island.config(text = "Red component image", bg = "red", font = ("Arial", 14), width = 80, height = 2)
     window.update_idletasks()
 
@@ -598,9 +596,9 @@ def green_img():
             new_img.putpixel((i, j), (0, g, 0))
             
     ORIGNAL_open_img_copy = new_img
-    new_img = ImageTk.PhotoImage(new_img)
-    lbl_PRESENT_img.configure(image = new_img)
-    lbl_PRESENT_img.image = new_img
+    photo_image = ImageTk.PhotoImage(new_img)
+    update_display_canvas(photo_image)
+
     Dynamic_Island.config(text = "Green component image", bg = "green2", font = ("Arial", 14), width = 80, height = 2)
     window.update_idletasks()
 
@@ -618,9 +616,9 @@ def blue_img():
             new_img.putpixel((i, j), (0, 0, b))
             
     ORIGNAL_open_img_copy = new_img
-    new_img = ImageTk.PhotoImage(new_img)
-    lbl_PRESENT_img.configure(image = new_img)
-    lbl_PRESENT_img.image = new_img
+    photo_image = ImageTk.PhotoImage(new_img)
+    update_display_canvas(photo_image)
+    
     Dynamic_Island.config(text = "Blue component image", bg = "blue", font = ("Arial", 14), width = 80, height = 2)
     window.update_idletasks()
 
@@ -738,9 +736,9 @@ def rgb_complements():
             new_img.putpixel((i, j), (255 - r, 255 - g, 255 - b))
             
     ORIGNAL_open_img_copy = new_img
-    new_img = ImageTk.PhotoImage(new_img)
-    lbl_PRESENT_img.configure(image = new_img)
-    lbl_PRESENT_img.image = new_img
+    photo_image = ImageTk.PhotoImage(new_img)
+    update_display_canvas(photo_image)
+    
     Dynamic_Island.config(text = "RGB model color complements", bg = "ghost white", font = ("Arial", 14), width = 80, height = 2)
     window.update_idletasks()
 

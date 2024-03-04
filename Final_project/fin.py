@@ -106,8 +106,8 @@ def open_img():
     global NOW_img
     global ORIGNAL_open_img
     global ORIGNAL_img
-    
-    fileName = filedialog.askopenfilename()
+
+    fileName = filedialog.askopenfilename(title = "Select an image file",)
     ORIGNAL_open_img = Image.open(fileName)
     NOW_img = ORIGNAL_open_img.copy()
     ORIGNAL_img = ImageTk.PhotoImage(ORIGNAL_open_img)
@@ -136,7 +136,8 @@ def open_raw():
     global NOW_img
     global ORIGNAL_open_img
     global ORIGNAL_img
-    fileName = filedialog.askopenfilename(initialdir = "/", title = "Select a .raw file",)
+
+    fileName = filedialog.askopenfilename(title = "Select a .raw file",)
     x = open(fileName,'rb')
     ORIGNAL_open_img = Image.frombytes("L", (512, 512), x.read(), 'raw')
     NOW_img = ORIGNAL_open_img
