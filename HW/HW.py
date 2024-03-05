@@ -93,6 +93,9 @@ def save_img():
         ORIGNAL_open_img_copy.save(file_name)
     else:
         print("Please enter a file name.")
+
+    Dynamic_Island.config(text = f"{file_name} has been saved! Please check your folder!", bg = "aquamarine", font = ("Arial", 16), width = 80, height = 2)
+    window.update_idletasks() 
     
 # display image
 def display_img():
