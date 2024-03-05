@@ -914,7 +914,7 @@ canvas.configure(xscrollcommand=h_scroll.set, yscrollcommand=v_scroll.set)
 # lbl_open = ttk.Label(window, text = "First step  ========  OPEN   ====   ==   = > ",font = ("Arial", 12))
 lbl_save_display = ttk.Label(window, text = "Please enter a file name to Save / Display the image (contain filename extenstion)",font = ("Arial", 10))
 # Entry
-entry_fileName = ttk.Entry(window, width = 25)
+entry_fileName = ttk.Entry(window, width = 20)
 # Button
 btn_open = ttk.Button(window, text = "Open an image", command = open_img)
 btn_save = ttk.Button(window, text = "Save image", command = save_img)
