@@ -84,7 +84,7 @@ def reset_img():
     window.update_idletasks()
 
 # save image 
-def save_image():
+def save_img():
     # Get the file name from the entry widget
     file_name = entry_fileName.get()
 
