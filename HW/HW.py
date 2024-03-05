@@ -918,7 +918,7 @@ entry_fileName = tk.Entry(window, width = 25)
 # Button
 btn_open = tk.Button(window, text = "Open an image", command = open_img)
 btn_save = tk.Button(window, text = "Save image", command = save_img)
-btn_display = tk.Button(window, text = "Display above image in another window", command = display_img)
+btn_display = tk.Button(window, text = "Keep above image in an indenpendent window", command = display_img)
         ### open .raw image file
 btn_raw = tk.Button(window, text = "Open a .raw image", command = open_raw)
         ### Haruki reset!
