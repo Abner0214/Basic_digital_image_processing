@@ -970,7 +970,7 @@ if_prs_text.set("Yes")
 lbl_slc = tk.Label(window, text = "Gray-level slicing")
 lbl_lowerbound = tk.Label(window, text = "Lowbound:")
 lbl_upperbound = tk.Label(window, text = "Upperbound:")
-lbl_prs = tk.Label(window, text = "Preserve ?")
+lbl_prs = tk.Label(window, text = "Preserve out of bounds ?")
 # Entry
 entry_lowerbound = tk.Entry(window, width = 8)
 entry_upperbound = tk.Entry(window, width = 8)

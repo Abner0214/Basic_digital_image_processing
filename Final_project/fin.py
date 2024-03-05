@@ -455,18 +455,18 @@ def blue_img():
 window = tk.Tk()
 
 
-window.title("<< PIL Final Project >>")
-Dynamic_Island = tk.Label(window, text = "A simple graphic user interface of PIL Final Project.", bg = "gold", font = ("Arial", 16), width = 80, height = 2)
+window.title("<< Final Project >>")
+Dynamic_Island = tk.Label(window, text = "Please open an image first", bg = "gold", font = ("Arial", 16), width = 80, height = 2)
 
                     ######  Define  ######
         ### ========================
-lbl___0_ = tk.Label(window, text = "========================")
-lbl___1_ = tk.Label(window, text = "========================")
-lbl___2_ = tk.Label(window, text = "========================")
-lbl___3_ = tk.Label(window, text = "========================")
-lbl___4_ = tk.Label(window, text = "========================")
-lbl___5_ = tk.Label(window, text = "========================")
-lbl___6_ = tk.Label(window, text = "========================")
+lbl___0_ = tk.Label(window, text = "==============================")
+lbl___1_ = tk.Label(window, text = "==============================")
+lbl___2_ = tk.Label(window, text = "==============================")
+lbl___3_ = tk.Label(window, text = "==============================")
+lbl___4_ = tk.Label(window, text = "==============================")
+lbl___5_ = tk.Label(window, text = "==============================")
+lbl___6_ = tk.Label(window, text = "==============================")
         ### open / save / dispaly   ### open .raw file  ### Haruki reset!
 # Label
 # Entry
@@ -490,13 +490,13 @@ btn_watermark = tk.Button(window, text = "Add", command = lambda: make_lowpass_w
 btn_slice = tk.Button(window, text = "Check", command = lambda: sheep.bit_plane_slic(put_WATERMARK, 0))
         ### Black and white overlay
 # Label
-lbl_overlay = tk.Label(window, text = "Two images overlay : ")
-lbl_img1_rgba = tk.Label(window, text = "Image1 [R] [G] [B] [A] : ")
-lbl_img2_rgba = tk.Label(window, text = "Image2 [R] [G] [B] [A] : ")
-lbl_scale = tk.Label(window, text = "Scale [x] [y] : ")
-lbl_img1_position = tk.Label(window, text = "Image1 position [x] [y] : ")
-lbl_img2_position = tk.Label(window, text = "Image2 position [x] [y] : ")
-lbl_slice = tk.Label(window, text = "Slice [x] [y] : ")
+lbl_overlay = tk.Label(window, text = "Overlay two images: ")
+lbl_img1_rgba = tk.Label(window, text = "Image1 [ R ] [ G ] [ B ] [ A ] : ")
+lbl_img2_rgba = tk.Label(window, text = "Image2 [ R ] [ G ] [ B ] [ A ] : ")
+lbl_scale = tk.Label(window, text = "Image size to use [ x ] x [ y ] : ")
+lbl_img1_position = tk.Label(window, text = "Image1 position ([ x ], [ y ]) : ")
+lbl_img2_position = tk.Label(window, text = "Image2 position ([ x ], [ y ]) : ")
+lbl_slice = tk.Label(window, text = "Overlay from ([ x1 ], [ y1 ]) to ([ x2 ], [ y2 ]) : ")
 # Entry
 global r1, g1, b1
 r1 = tk.IntVar()
@@ -540,11 +540,11 @@ BLACK_img = Image.open(os.path.join("Image samples\Color wheel\color_wheel.png")
 btn_white_img = tk.Button(window, text = "Image1", command = open_white_img)
 btn_black_img = tk.Button(window, text = "Image2", command = open_black_img)
 btn_overlay_img = tk.Button(window, text = "Overlay", command = lambda: make_camouflage_img_generater(WHITE_img, BLACK_img))
-btn_img1_rgb = tk.Button(window, text = "RGB", command = fill_img1_RGB)
-btn_img2_rgb = tk.Button(window, text = "RGB", command = fill_img2_RGB)
+btn_img1_rgb = tk.Button(window, text = "RGB color wheel", command = fill_img1_RGB)
+btn_img2_rgb = tk.Button(window, text = "RGB color wheel", command = fill_img2_RGB)
         ### Color block
 # Label
-lbl_block = tk.Label(window, text = "Color block [x] [y] [range] : ")
+lbl_block = tk.Label(window, text = "Color block [ x ] [ y ] [ Difference (?%) ] : ")
 # Entry
 entry_x = tk.Entry(window, width = 5)
 entry_y = tk.Entry(window, width = 5)
@@ -555,14 +555,14 @@ btn_block = tk.Button(window, text = "Color", command = make_color_block)
 lbl_n_rgb = tk.Label(window, text = "RGB complement : ")
 btn_n_rgb = tk.Button(window, text = "Do", command = use_rgb_comp)
         ### RGB smoothing
-lbl_rgb_smo = tk.Label(window, text = "RGB soothing [degree] : ")
+lbl_rgb_smo = tk.Label(window, text = "RGB soothing [ degree ] : ")
 entry_degree = tk.Entry(window, width = 5)
 btn_rgb_smo = tk.Button(window, text = "Do", command = use_rgb_smooth)
     ## Convert RGB to HSI model ,and display its Hue, Saturation, and Intensity components as gray-level images respectively.
 # Label
 lbl_RGB_to_HSI = tk.Label(window, text = "Convert RGB to HSI :")
 # Button
-btn_RGB_to_HSI = tk.Button(window, text = "do", command = rgb_to_h_s_i_subplot)
+btn_RGB_to_HSI = tk.Button(window, text = "Do", command = rgb_to_h_s_i_subplot)
     ## Component image
 # Label
 lbl_com_img = tk.Label(window, text = "Component image :")
