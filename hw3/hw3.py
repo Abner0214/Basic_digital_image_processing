@@ -15,7 +15,7 @@ def update_display_canvas(photo_image):
     canvas.config(scrollregion=canvas.bbox('all'))
 
 def showProcessing():
-    Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
+    Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 2)
     window.update_idletasks()
 
 # open image
@@ -79,7 +79,7 @@ def reset_img():
 
     global File_path
     nameStr = File_path.split("/")
-    Dynamic_Island.config(text = f"{nameStr[-1]} resetd! It looks like opened just now!", bg = "hot pink", font = ("Arial", 14), width = 60, height = 2)
+    Dynamic_Island.config(text = f"{nameStr[-1]} resetd! It looks like just opened !", bg = "hot pink", font = ("Arial", 14), width = 60, height = 2)
     window.update_idletasks()
 
 # save image 
@@ -105,7 +105,7 @@ def display_img():
     global ORIGNAL_open_img_copy
     ORIGNAL_open_img_copy.show()
 
-    Dynamic_Island.config(text = "Display!", bg = "green4", font = ("Arial", 16), width = 80, height = 1)
+    Dynamic_Island.config(text = "Display!", bg = "darkorchid2", font = ("Arial", 16), width = 80, height = 2)
     window.update_idletasks()
 
 # Adjust contrast/brightness of images by linearly
@@ -244,8 +244,8 @@ def prs_change():
 # Display the histogram of images
 def display_htg():
 
-    Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
-    window.update_idletasks()    
+    showProcessing()
+
     img = ORIGNAL_open_img_copy
     pixels = []
     for x in range(256):
@@ -257,15 +257,15 @@ def display_htg():
             counts[img.getpixel((x,y))] += 1
     # plot histogram
     plt.bar(pixels,counts)
-    Dynamic_Island.config(text = "Display the histogram of images!", bg = "green4", font = ("Arial", 16), width = 80, height = 1)
+    Dynamic_Island.config(text = "Display the histogram of images!", bg = "green4", font = ("Arial", 16), width = 80, height = 2)
     window.update_idletasks()
     plt.show()
 
 # Histogram equlization
 def auto_level():
     
-    Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
-    window.update_idletasks()
+    showProcessing()
+
     max_gray_lv = 256
     all_lv = [0] * 256
     temp = [0] * 256
@@ -300,8 +300,8 @@ def bit_plane():
 
     plane = int(entry_bit_plane.get())
 
-    Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
-    window.update_idletasks()
+    showProcessing()
+
     global ORIGNAL_open_img_copy
     new_img = Image.new("L", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
     for i in range(ORIGNAL_open_img_copy.size[0]):
@@ -327,8 +327,8 @@ def bit_plane():
 # smoothing
 def smoothing():
   
-    Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
-    window.update_idletasks()
+    showProcessing()
+
     degree = int(entry_degree.get())
     global ORIGNAL_open_img_copy
     new_img = Image.new("L", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
@@ -358,14 +358,12 @@ def smoothing():
 def sharpening():
 
     k = int(entry_degree.get())
-    Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
-    window.update_idletasks()
+    showProcessing()
     if(k < 0):
         print("[Error]: k must >= 0")
         Dynamic_Island.config(text = "[Error]:k must >= 0", bg = "DarkSlateGray3", font = ("Arial", 14), width = 70, height = 2)
         return
-    Dynamic_Island.config(text = "Processing ...", bg = "Green3", font = ("Arial", 14), width = 50, height = 2)
-    window.update_idletasks()
+    showProcessing()
     global ORIGNAL_open_img_copy
     temp_img = ORIGNAL_open_img_copy.copy()
     
@@ -385,8 +383,7 @@ def sharpening():
 # median smoothing
 def median():
 
-    Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
-    window.update_idletasks()
+    showProcessing()
     degree = int(entry_degree.get())
     global ORIGNAL_open_img_copy
     new_img = Image.new("L", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
@@ -413,8 +410,7 @@ def median():
 # Laplacian mask
 def Laplacian():
     
-    Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
-    window.update_idletasks()
+    showProcessing()
 
     global ORIGNAL_open_img_copy
     new_img = Image.new("L", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
@@ -444,8 +440,7 @@ def Laplacian():
 # phase-only image
 def log_mag_pha_img():
     
-    Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
-    window.update_idletasks()
+    showProcessing()
 
     global ORIGNAL_open_img_copy
     a = []
@@ -507,8 +502,9 @@ def log_mag_pha_img():
 # Computing the inverse DFT
 # Multiplying the real part of the result by (-1)^(x+y)
 def step1_5():
-    Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
-    window.update_idletasks()
+
+    showProcessing()
+
     global ORIGNAL_open_img_copy
     a = []
     for i in range(ORIGNAL_open_img_copy.size[0]):
@@ -543,31 +539,31 @@ def step1_5():
     step5 = numpy.transpose(numpy.real(step5))
     ax[0, 0].title.set_text("Original image")
     ax[0, 0].imshow(ORIGNAL_open_img_copy, interpolation="none",cmap="gray",vmin=0,vmax=255)
-    ax[0, 1].title.set_text("Step. (1)")
+    ax[0, 1].title.set_text("Step. (1): Multiplying the image by (-1)^(x+y)")
     ax[0, 1].imshow(step1, interpolation="none",cmap="gray",vmin=0,vmax=255)
-    ax[0, 2].title.set_text("Step. (2)")
+    ax[0, 2].title.set_text("Step. (2): Computing the DFT")
     ax[0, 2].imshow(step2, interpolation="none",cmap="gray",vmin=0,vmax=255)
-    ax[1, 0].title.set_text("Step. (3)")
+    ax[1, 0].title.set_text("Step. (3): Taking the complex conjugate of the transform")
     ax[1, 0].imshow(step3, interpolation="none",cmap="gray",vmin=0,vmax=255)
-    ax[1, 1].title.set_text("Step. (4)")
+    ax[1, 1].title.set_text("Step. (4): Computing the inverse DFT")
     ax[1, 1].imshow(step4, interpolation="none",cmap="gray",vmin=0,vmax=255)
-    ax[1, 2].title.set_text("Step. (5)")
+    ax[1, 2].title.set_text("Step. (5): Multiplying the real part of the result by (-1)^(x+y)")
     ax[1, 2].imshow(step5, interpolation="none",cmap="gray",vmin=0,vmax=255)
 
-    Dynamic_Island.config(text = "Display Problem. 3 step.(1) - (5)", bg = "ghost white", font = ("Arial", 14), width = 80, height = 2)
+    Dynamic_Island.config(text = "Display DFT processing", bg = "ghost white", font = ("Arial", 14), width = 80, height = 2)
     window.update_idletasks()
     #fig.canvas.set_window_title("Problem. 3")
 
     fig.set_figheight(8)
-    fig.set_figwidth(8)
+    fig.set_figwidth(16)
     plt.show()
             
 # Red component image
 def red_img():
-    Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
-    window.update_idletasks()
-    global ORIGNAL_open_img_copy
 
+    showProcessing()
+
+    global ORIGNAL_open_img_copy
     split_img = Image.Image.split(ORIGNAL_open_img_copy)
     new_img = Image.new("RGB", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
     for i in range(ORIGNAL_open_img_copy.size[0]):
@@ -584,10 +580,10 @@ def red_img():
 
 # Green component image
 def green_img():
-    Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
-    window.update_idletasks()
-    global ORIGNAL_open_img_copy
 
+    showProcessing()
+
+    global ORIGNAL_open_img_copy
     split_img = Image.Image.split(ORIGNAL_open_img_copy)
     new_img = Image.new("RGB", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
     for i in range(ORIGNAL_open_img_copy.size[0]):
@@ -604,10 +600,10 @@ def green_img():
 
 # Blue component image
 def blue_img():
-    Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
-    window.update_idletasks()
-    global ORIGNAL_open_img_copy
 
+    showProcessing()
+
+    global ORIGNAL_open_img_copy
     split_img = Image.Image.split(ORIGNAL_open_img_copy)
     new_img = Image.new("RGB", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
     for i in range(ORIGNAL_open_img_copy.size[0]):
@@ -683,10 +679,10 @@ def hsi_to_rgb(h, s, i):
 
 # RGB to Hue, saturation, Intenstity subplot
 def rgb_to_h_s_i_subplot():
-    Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
-    window.update_idletasks()
-    global ORIGNAL_open_img_copy
 
+    showProcessing()
+
+    global ORIGNAL_open_img_copy
     split_img = Image.Image.split(ORIGNAL_open_img_copy)
     h_img = Image.new("L", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
     s_img = Image.new("L", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
@@ -716,16 +712,16 @@ def rgb_to_h_s_i_subplot():
     window.update_idletasks()
     #fig.canvas.set_window_title("Problem. 3")
 
-    fig.set_figheight(8)
-    fig.set_figwidth(8)
+    fig.set_figheight(4)
+    fig.set_figwidth(12)
     plt.show()
 
 # RGB complements to enhance the detail
 def rgb_complements():
-    Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
-    window.update_idletasks()
+
+    showProcessing()
+
     global ORIGNAL_open_img_copy
-    
     split_img = Image.Image.split(ORIGNAL_open_img_copy)
     new_img = Image.new("RGB", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
     for i in range(ORIGNAL_open_img_copy.size[0]):
@@ -743,12 +739,12 @@ def rgb_complements():
     window.update_idletasks()
 
 def rgb_hsi_sharping():
-    Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
-    window.update_idletasks()
-    global ORIGNAL_open_img_copy
+
+    showProcessing()
 
     degree = 5
 
+    global ORIGNAL_open_img_copy
     split_img = Image.Image.split(ORIGNAL_open_img_copy)
     smoothing_img = Image.new("RGB", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
     I_smoothing_img = Image.new("RGB", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
@@ -837,17 +833,16 @@ def rgb_hsi_sharping():
     window.update_idletasks()
     #fig.canvas.set_window_title("Problem. 3")
 
-    fig.set_figheight(8)
-    fig.set_figwidth(8)
+    fig.set_figheight(4)
+    fig.set_figwidth(10)
     plt.show()
 
 # Segmenting the feathers
 def seg_fea_mask():
     
-    Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
-    window.update_idletasks()
-    global ORIGNAL_open_img_copy
+    showProcessing()
 
+    global ORIGNAL_open_img_copy
     split_img = Image.Image.split(ORIGNAL_open_img_copy)
     feathers_img = Image.new("RGB", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
     H_img = Image.new("L", (ORIGNAL_open_img_copy.size[0], ORIGNAL_open_img_copy.size[1]))
@@ -881,8 +876,8 @@ def seg_fea_mask():
     window.update_idletasks()
     #fig.canvas.set_window_title("Problem. 3")
 
-    fig.set_figheight(8)
-    fig.set_figwidth(8)
+    fig.set_figheight(4)
+    fig.set_figwidth(12)
     plt.show()
 
 
@@ -914,23 +909,23 @@ canvas.configure(xscrollcommand=h_scroll.set, yscrollcommand=v_scroll.set)
 
 
 
-        ### open / save / dispaly
+        ### open / save / display
 # Label
 # lbl_open = tk.Label(window, text = "First step  ========  OPEN   ====   ==   = > ",font = ("Arial", 12))
-lbl_save_dispaly = tk.Label(window, text = "Please enter a file name to Save / Display the image (contain filename extenstion)",font = ("Arial", 10))
+lbl_save_display = tk.Label(window, text = "Please enter a file name to Save / Display the image (contain filename extenstion)",font = ("Arial", 10))
 # Entry
 entry_fileName = tk.Entry(window, width = 25)
 # Button
 btn_open = tk.Button(window, text = "Open an image", command = open_img)
 btn_save = tk.Button(window, text = "Save image", command = save_img)
-btn_display = tk.Button(window, text = "Display image", command = display_img)
+btn_display = tk.Button(window, text = "Display above image in another window", command = display_img)
         ### open .raw image file
 btn_raw = tk.Button(window, text = "Open a .raw image", command = open_raw)
         ### Haruki reset!
-btn_reset = tk.Button(window, text = "Reset current image", command = reset_img)
+btn_reset = tk.Button(window, text = "Reset image", command = reset_img)
         ### Display the histogram of images
 lbl_eql = tk.Label(window, text = "Histogram Equalization")
-btn_htg = tk.Button(window, text = "Dispaly histogram", command = display_htg)
+btn_htg = tk.Button(window, text = "Display histogram", command = display_htg)
 btn_htg_eql = tk.Button(window, text = "Equalize", command = auto_level)
 
         ### Adjust contrast / brightness of images
@@ -999,9 +994,9 @@ btn_lpl = tk.Button(window, text = "Laplacian", command = Laplacian)
 
         ### log |F(u,v)|  &  Magnitude and Phase images
 # Label
-lbl_log_mag_pha_img = tk.Label(window, text = "2D FFT :")
+lbl_log_mag_pha_img = tk.Label(window, text = "2D FFT processing")
 # Button
-btn_log_mag_pha_img = tk.Button(window, text = "do", command = log_mag_pha_img)
+btn_log_mag_pha_img = tk.Button(window, text = "Do", command = log_mag_pha_img)
 
         ### 3. step. (1) - (5)
     ## Multiplying the image by (-1)^(x+y)
@@ -1010,54 +1005,54 @@ btn_log_mag_pha_img = tk.Button(window, text = "do", command = log_mag_pha_img)
     ## Computing the inverse DFT
     ## Multiplying the real part of the result by (-1)^(x+y)
 # Label
-lbl_step1_5 = tk.Label(window, text = "(DFT) Step.(1) - (5) :")
+lbl_step1_5 = tk.Label(window, text = "DFT processing")
 # Button
-btn_step1_5 = tk.Button(window, text = "do", command = step1_5)
+btn_step1_5 = tk.Button(window, text = "Do", command = step1_5)
 
         ### 4. (b) - (f)
     ## Component image
 # Label
-lbl_com_img = tk.Label(window, text = "Component image :")
+lbl_com_img = tk.Label(window, text = "Component image ")
 # Button
 btn_red_img = tk.Button(window, text = "Red", command = red_img)
 btn_green_img = tk.Button(window, text = "Green", command = green_img)
 btn_blue_img = tk.Button(window, text = "Blue", command = blue_img)
     ## Convert RGB to HSI model ,and display its Hue, Saturation, and Intensity components as gray-level images respectively.
 # Label
-lbl_RGB_to_HSI = tk.Label(window, text = "Convert RGB to HSI :")
+lbl_RGB_to_HSI = tk.Label(window, text = "Convert RGB to HSI")
 # Button
-btn_RGB_to_HSI = tk.Button(window, text = "do", command = rgb_to_h_s_i_subplot)
+btn_RGB_to_HSI = tk.Button(window, text = "Do", command = rgb_to_h_s_i_subplot)
     ## Do color complements by using RGB model
 # Label
-lbl_rgb_cpm = tk.Label(window, text = "RGB color complements (Enhance the detail) :")
+lbl_rgb_cpm = tk.Label(window, text = "RGB color complementary image (To enhance the detail)")
 # Button
-btn_rgb_cpm = tk.Button(window, text = "do", command = rgb_complements)
+btn_rgb_cpm = tk.Button(window, text = "Do", command = rgb_complements)
 
     ## Sharping with the Laplacian to this image by using RGB and HSI models
 # Label
-lbl_rgb_hsi_sharping = tk.Label(window, text = "Sharping with the Laplacian to this image by using RGB and HSI models :")
+lbl_rgb_hsi_sharping = tk.Label(window, text = "Sharping with the Laplacian to this image by using RGB and HSI models")
 # Button
-btn_rgb_hsi_sharping = tk.Button(window, text = "do ", command = rgb_hsi_sharping)
+btn_rgb_hsi_sharping = tk.Button(window, text = "Do", command = rgb_hsi_sharping)
     ## segmenting the feathers
-lbl_seg_fea = tk.Label(window, text = "Segmenting the feathers of Lenna image")
+lbl_seg_fea = tk.Label(window, text = "Segmenting the feathers of \"Lenna_512_color.tif\"")
 # Button
-btn_seg_fea = tk.Button(window, text = "do", command = seg_fea_mask)
+btn_seg_fea = tk.Button(window, text = "Do", command = seg_fea_mask)
 
                     ######  composition  ######
 # Heading
 Dynamic_Island.grid(row = 0, column = 0, columnspan = 15, rowspan = 1)
-# Open / Save
-# lbl_open.grid(row = 1, column = 0)
+# Open image
 btn_open.grid(row = 1, column = 1)
-lbl_save_dispaly.grid(row = 3, column = 0)
-entry_fileName.grid(row = 4, column = 0)
-btn_save.grid(row = 4, column = 1)
+# Display image
+btn_display.grid(row = 3, column = 0)  
+#  Save image
+lbl_save_display.grid(row = 4, column = 0)
+entry_fileName.grid(row = 4, column = 1)
+btn_save.grid(row = 4, column = 2)
 # open .raw image file
 btn_raw.grid(row = 1, column = 2)
 # Haruki reset!
-btn_reset.grid(row = 2, column = 1)
-# Dispaly image
-btn_display.grid(row = 2, column = 2)                             
+btn_reset.grid(row = 2, column = 1)                           
 # Adjust contrast / brightness of images
 lbl_bri.grid(row = 6, column = 0)
 # lbl_a.grid(row = 6, column = 1)
