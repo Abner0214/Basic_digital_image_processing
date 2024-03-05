@@ -84,19 +84,15 @@ def reset_img():
     window.update_idletasks()
 
 # save image 
-def save_img():
+def save_image():
+    # Get the file name from the entry widget
+    file_name = entry_fileName.get()
 
-    showProcessing()
-
-    newName = entry_fileName.get()
-    if newName[-3:] == ".tif":
-        ORIGNAL_open_img_copy.save(newName, "tiff")
-        Dynamic_Island.config(text = "The image has been saved in the TIF format! Please check your folder!", bg = "aquamarine", font = ("Arial", 16), width = 80, height = 2)
+    # Check if the file name is not empty
+    if file_name:
+        ORIGNAL_open_img_copy.save(file_name)
     else:
-        ORIGNAL_open_img_copy.save(newName, "JPEG")
-        Dynamic_Island.config(text = "The image has been saved in the JPG format! Please check your folder!", bg = "aquamarine", font = ("Arial", 16), width = 80, height = 2)
-
-    window.update_idletasks()   
+        print("Please enter a file name.")
     
 # display image
 def display_img():
