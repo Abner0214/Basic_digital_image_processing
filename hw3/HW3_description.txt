@@ -30,10 +30,10 @@ rotate_img():
 lin_adj():
 exp_adj():
 log_adj():
-	(A) linearly (Y = aX +b)
-	(B) exponentially (Y = exp(aX+b))
-	(C) logarithmically (Y = ln(aX+b), b > 1)
-	X represents the grayscale value of each pixel in the picture in three ways: Linearly, Exponentially, Logarithmically
+	(A) linearly (Y = aX + b)
+	(B) exponentially (Y = exp(aX + b))
+	(C) logarithmically (Y = ln(aX + b), b > 1)
+	X represents the grayscale value of each pixel in the picture.
 	Convert X to new grayscale value Y to form a new image
 gray_lvl_slc():
 	Preserve out of bounds? Yes/No Button: Determine whether to preserve the grayscale value pixels outside Upperbound and Lowerbound. If not, set it to 0

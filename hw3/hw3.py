@@ -321,7 +321,7 @@ def bit_plane():
     photo_image = ImageTk.PhotoImage(new_img)
     update_display_canvas(photo_image)
 
-    Dynamic_Island.config(text = "Display bit-plane: " + str(plane), bg = "gold", font = ("Arial", 14), width = 80, height = 2)
+    Dynamic_Island.config(text = "Bit-plane: " + str(plane), bg = "gold", font = ("Arial", 14), width = 80, height = 2)
     window.update_idletasks()
 
 # smoothing
@@ -890,7 +890,7 @@ def seg_fea_mask():
 
 window = tk.Tk()
 window.title("Basic Digital Image Processing")
-Dynamic_Island = tk.Label(window, text = "Please open an image file first", bg = "gold", font = ("Arial", 16), width = 80, height = 2)
+Dynamic_Island = tk.Label(window, text = "Please open an image file first!", bg = "gold", font = ("Arial", 16), width = 80, height = 2)
 
 
                     ######  Define component ######
@@ -916,7 +916,7 @@ canvas.configure(xscrollcommand=h_scroll.set, yscrollcommand=v_scroll.set)
 
         ### open / save / dispaly
 # Label
-lbl_open = tk.Label(window, text = "First step  ========  OPEN   ====   ==   = > ",font = ("Arial", 12))
+# lbl_open = tk.Label(window, text = "First step  ========  OPEN   ====   ==   = > ",font = ("Arial", 12))
 lbl_save_dispaly = tk.Label(window, text = "Please enter a file name to Save / Display the image (contain filename extenstion)",font = ("Arial", 10))
 # Entry
 entry_fileName = tk.Entry(window, width = 25)
@@ -929,15 +929,15 @@ btn_raw = tk.Button(window, text = "Open a .raw image", command = open_raw)
         ### Haruki reset!
 btn_reset = tk.Button(window, text = "Reset current image", command = reset_img)
         ### Display the histogram of images
-lbl_eql = tk.Label(window, text = "Histogram Equlization")
-btn_htg = tk.Button(window, text = "Histogram of current images", command = display_htg)
-btn_htg_eql = tk.Button(window, text = "Equlization", command = auto_level)
+lbl_eql = tk.Label(window, text = "Histogram Equalization")
+btn_htg = tk.Button(window, text = "Dispaly histogram", command = display_htg)
+btn_htg_eql = tk.Button(window, text = "Equalize", command = auto_level)
 
         ### Adjust contrast / brightness of images
 # Label
-lbl_bri = tk.Label(window, text = "Adjust contrast / brightness")
-lbl_a = tk.Label(window, text = "a :")
-lbl_b = tk.Label(window, text = "b :")
+lbl_bri = tk.Label(window, text = "Adjust contrast / brightness (aX + b, exp(aX + b), ln(aX + b), b > 1)   |   a: [ integer ] b: [ > 1 ]")
+# lbl_a = tk.Label(window, text = "a :")
+# lbl_b = tk.Label(window, text = "b :")
 # Entry
 entry_a = tk.Entry(window, width = 8)
 entry_b = tk.Entry(window, width = 8)
@@ -948,7 +948,7 @@ btn_log = tk.Button(window, text = "Log", command = lambda: log_adj(float(entry_
     
         ### Zoom in and shrink
 # Label
-lbl_resize = tk.Label(window, text = "Resize the image ( ? %):")
+lbl_resize = tk.Label(window, text = "Resize the image (by percentage)   |   [ > 0 ]")
 # Entry
 entry_resize = tk.Entry(window, width = 8)
 # Button
@@ -956,7 +956,7 @@ btn_resize = tk.Button(window, text = "Resize", command  = lambda: resize_img(in
 
         ### Rotate  
 # Label
-lbl_rot = tk.Label(window, text = "Rotate the image (by degrees) :")
+lbl_rot = tk.Label(window, text = "Rotate the image (by degrees)   |   [ integer ]")
 # Entry
 entry_rot = tk.Entry(window, width = 8)
 # Button
@@ -967,10 +967,10 @@ if_prs_btn = True
 if_prs_text = tk.StringVar()
 if_prs_text.set("Yes")
 # Label
-lbl_slc = tk.Label(window, text = "Gray-level slicing")
-lbl_lowerbound = tk.Label(window, text = "Lowbound:")
-lbl_upperbound = tk.Label(window, text = "Upperbound:")
-lbl_prs = tk.Label(window, text = "Preserve out of bounds ?")
+lbl_slc = tk.Label(window, text = "Gray-level slicing   |   Lowbound: [ 0 - 255 ] Upperbound: [ 0 - 255 ]")
+# lbl_lowerbound = tk.Label(window, text = "Lowbound:")
+# lbl_upperbound = tk.Label(window, text = "Upperbound:")
+lbl_prs = tk.Label(window, text = "Preserve?")
 # Entry
 entry_lowerbound = tk.Entry(window, width = 8)
 entry_upperbound = tk.Entry(window, width = 8)
@@ -980,7 +980,7 @@ btn_if_prs = tk.Button(window, textvariable = if_prs_text, command = prs_change)
 
         ### Bit-plane image
 # Label
-lbl_bit_plane = tk.Label(window, text = "Bit-plane image ( Please enter a number (1 - 7) ):")
+lbl_bit_plane = tk.Label(window, text = "Bit-plane image   |   [ 1 - 7 ]")
 # Entry
 entry_bit_plane = tk.Entry(window, width = 8)
 # Button
@@ -988,18 +988,18 @@ btn_bit_plane = tk.Button(window, text = "Slice", command = bit_plane)
 
         ### [Spatial Filters] smoothing / sharpening / median filter / Laplacian mask
 # Label
-lbl_spt_flt = tk.Label(window, text = "Spatial Filters (degree) :")
+lbl_spt_flt = tk.Label(window, text = "Spatial Filters (degree)   |   [ integer ]")
 # Entry
 entry_degree = tk.Entry(window, width = 8)
 # Button
-btn_smt = tk.Button(window, text = "Arithmetic mean smoothing", command = smoothing)
+btn_smt = tk.Button(window, text = "Mean", command = smoothing)
 btn_shp = tk.Button(window, text = "Sharpening", command = sharpening)
 btn_med = tk.Button(window, text = "Median", command = median)
 btn_lpl = tk.Button(window, text = "Laplacian", command = Laplacian)
 
         ### log |F(u,v)|  &  Magnitude and Phase images
 # Label
-lbl_log_mag_pha_img = tk.Label(window, text = "2D FFT:")
+lbl_log_mag_pha_img = tk.Label(window, text = "2D FFT :")
 # Button
 btn_log_mag_pha_img = tk.Button(window, text = "do", command = log_mag_pha_img)
 
@@ -1039,35 +1039,34 @@ lbl_rgb_hsi_sharping = tk.Label(window, text = "Sharping with the Laplacian to t
 # Button
 btn_rgb_hsi_sharping = tk.Button(window, text = "do ", command = rgb_hsi_sharping)
     ## segmenting the feathers
-lbl_seg_fea = tk.Label(window, text = "Segmenting the feathers")
+lbl_seg_fea = tk.Label(window, text = "Segmenting the feathers of Lenna image")
 # Button
 btn_seg_fea = tk.Button(window, text = "do", command = seg_fea_mask)
 
                     ######  composition  ######
 # Heading
 Dynamic_Island.grid(row = 0, column = 0, columnspan = 15, rowspan = 1)
-# Open / Save / Dispaly
-lbl_open.grid(row = 1, column = 0)
+# Open / Save
+# lbl_open.grid(row = 1, column = 0)
 btn_open.grid(row = 1, column = 1)
 lbl_save_dispaly.grid(row = 3, column = 0)
 entry_fileName.grid(row = 4, column = 0)
 btn_save.grid(row = 4, column = 1)
-btn_display.grid(row = 4, column = 2)
 # open .raw image file
 btn_raw.grid(row = 1, column = 2)
 # Haruki reset!
 btn_reset.grid(row = 2, column = 1)
-# Display the histogram of images
-btn_htg.grid(row = 2, column = 2)                                     
+# Dispaly image
+btn_display.grid(row = 2, column = 2)                             
 # Adjust contrast / brightness of images
 lbl_bri.grid(row = 6, column = 0)
-lbl_a.grid(row = 6, column = 1)
-entry_a.grid(row = 6, column = 2)
-lbl_b.grid(row = 6, column = 3)
-entry_b.grid(row = 6, column = 4)
-btn_lin.grid(row = 6, column = 5)
-btn_exp.grid(row = 6, column = 6)
-btn_log.grid(row = 6, column = 7)
+# lbl_a.grid(row = 6, column = 1)
+entry_a.grid(row = 6, column = 1)
+# lbl_b.grid(row = 6, column = 3)
+entry_b.grid(row = 6, column = 2)
+btn_lin.grid(row = 6, column = 3)
+btn_exp.grid(row = 6, column = 4)
+btn_log.grid(row = 6, column = 5)
 # Zoom in and shrink
 lbl_resize.grid(row = 7, column = 0)
 entry_resize.grid(row = 7, column = 1)
@@ -1078,16 +1077,18 @@ entry_rot.grid(row = 8, column = 1)
 btn_rot.grid(row = 8, column = 2)
 # Gray-level slicing
 lbl_slc.grid(row = 9, column = 0)
-lbl_lowerbound.grid(row = 9, column = 1)
-entry_lowerbound.grid(row = 9, column = 2)
-lbl_upperbound.grid(row = 9, column = 3)
-entry_upperbound.grid(row = 9, column = 4)
-lbl_prs.grid(row = 9, column = 5)
-btn_if_prs.grid(row = 9, column = 6)
-btn_slc.grid(row = 9, column = 7)                               
+# lbl_lowerbound.grid(row = 9, column = 1)
+entry_lowerbound.grid(row = 9, column = 1)
+# lbl_upperbound.grid(row = 9, column = 3)
+entry_upperbound.grid(row = 9, column = 2)
+lbl_prs.grid(row = 9, column = 3)
+btn_if_prs.grid(row = 9, column = 4)
+btn_slc.grid(row = 9, column = 5)                               
 # Histogram equlization
+# Display the histogram of images    
 lbl_eql.grid(row = 10, column = 0)
-btn_htg_eql.grid(row = 10, column = 1)
+btn_htg.grid(row = 10, column = 1)    
+btn_htg_eql.grid(row = 10, column = 2)
 # Bit-plane image
 lbl_bit_plane.grid(row = 11, column = 0)
 entry_bit_plane.grid(row = 11, column = 1)
