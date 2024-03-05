@@ -1038,6 +1038,11 @@ lbl_seg_fea = ttk.Label(window, text = "Segmenting the feathers of \"Lenna_512_c
 # Button
 btn_seg_fea = ttk.Button(window, text = "Do", command = seg_fea_mask)
 
+# ======== Grayscale image ========
+lbl_______grayscale_img = ttk.Label(window, text="######################  Grayscale image  ######################")
+# ========== Color image ==========
+lbl_______color_img = ttk.Label(window, text="######################  Color image  ######################")
+
                     ######  composition  ######
 # Heading
 Dynamic_Island.grid(row = 0, column = 0, columnspan = 15, rowspan = 1)
@@ -1052,7 +1057,8 @@ btn_save.grid(row = 4, column = 2)
 # open .raw image file
 btn_raw.grid(row = 1, column = 2)
 # Haruki reset!
-btn_reset.grid(row = 2, column = 1)                           
+btn_reset.grid(row = 2, column = 1)
+lbl_______grayscale_img.grid(row = 5, column = 0)                 
 # Adjust contrast / brightness of images
 lbl_bri.grid(row = 6, column = 0)
 # lbl_a.grid(row = 6, column = 1)
@@ -1095,12 +1101,13 @@ btn_smt.grid(row = 12, column = 2)
 btn_shp.grid(row = 12, column = 3)
 btn_med.grid(row = 12, column = 4)
 btn_lpl.grid(row = 12, column = 5)
-# log |F(u,v)|  &  Magnitude and Phase images
+# 2D FFT log |F(u,v)|  &  Magnitude and Phase images
 lbl_log_mag_pha_img.grid(row = 13, column = 0)
 btn_log_mag_pha_img.grid(row = 13, column = 1)
-# 3. step. (1) - (5)
+# 3. DFT step. (1) - (5)
 lbl_step1_5.grid(row = 15, column = 0)
 btn_step1_5.grid(row = 15, column = 1)
+lbl_______color_img.grid(row = 18, column = 0)
 # 4. (b) - (f)
 lbl_com_img.grid(row = 20, column = 0)
 btn_red_img.grid(row = 20, column = 1)
