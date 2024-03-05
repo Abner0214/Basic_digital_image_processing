@@ -1039,9 +1039,9 @@ lbl_seg_fea = ttk.Label(window, text = "Segmenting the feathers of \"Lenna_512_c
 btn_seg_fea = ttk.Button(window, text = "Do", command = seg_fea_mask)
 
 # ======== Grayscale image ========
-lbl_______grayscale_img = ttk.Label(window, text="######################  Grayscale image  ######################")
+lbl_______grayscale_img = ttk.Label(window, text=" ######################  Grayscale image  ###################### ")
 # ========== Color image ==========
-lbl_______color_img = ttk.Label(window, text="######################  Color image  ######################")
+lbl_______color_img = ttk.Label(window, text=" ######################  Color image  ###################### ")
 
                     ######  composition  ######
 # Heading
