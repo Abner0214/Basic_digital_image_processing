@@ -1,59 +1,66 @@
-python 3.9.7 64bit
+python 3.10.11 64-bit
 
-影像處理套件：PIL ( Pillow )	pip install tkinter
-圖形使用者介面套件 GUI：Tkinter	pip install pillow
-OS	pip install os
-math	pip install math
-numpy	pip install numpy
-matplotlib.pyplot  python -m pip install -U matplotlib
+Image processing package: PIL (Pillow) > pip install pillow
+Graphical User Interface Kit GUI: Tkinter > pip install tkinter
+OS > pip install os
+math > pip install math
+numpy > pip install numpy
+matplotlib.pyplot > python -m pip install -U matplotlib
 
 
 functions:
 
 open_img():
 	open image
-	Uisng filedialog.askopenfilename()
-open_raw():
-	open raw image
+Uisng filedialog.askopenfilename()
+	open_raw():
+open raw image
 	Uisng filedialog.askopenfilename(), Image.frombytes("L", (512, 512), x.read(), 'raw')
-save_img(): 
+save_img():
 	save image
 	img.save("FILE NAME", "FORMAT")
 reset_img():
-	移除所有對原本開啟圖片的影像處理
-
-Zoom in and shrink:
-	用百分比放大縮小圖片
-	mage.resize( (width , height) , resample)
-Rotate:
-	旋轉圖片
+	Remove all image processing on the originally opened image
+resize_img():
+	Zoom in and out of images using percentages
+	mage.resize((width, height), resample)
+rotate_img():
+	Rotate picture
 	Image.rotate( angle , resample)
-Gray-level slicing: 
-	X 代表圖片中各 pixel 的灰階值以三種方式: Linearly, Exponentially, Logarithmically 
-	轉換 X 成 新的灰階值 Y 組成新的圖片
-	Preserve? Yes/No Button : 決定要不要保留 Upperbound 和 Lowerbound 之外的灰階值 pixel，不保留設為 0
-
+lin_adj():
+exp_adj():
+log_adj():
+	(A) linearly (Y = aX +b)
+	(B) exponentially (Y = exp(aX+b))
+	(C) logarithmically (Y = ln(aX+b), b > 1)
+	X represents the grayscale value of each pixel in the picture in three ways: Linearly, Exponentially, Logarithmically
+	Convert X to new grayscale value Y to form a new image
+gray_lvl_slc():
+	Preserve out of bounds? Yes/No Button: Determine whether to preserve the grayscale value pixels outside Upperbound and Lowerbound. If not, set it to 0
 display_htg():
 	dispaly current histogram
 	import matplotlib.pyplot as plt, plt.bar(), plt.show()
-auto_level(): 
-	計算每個灰階出現的機率，將原累計機率乘以255
+auto_level():
+	Calculate the probability of each gray level appearing and multiply the original cumulative probability by 255
 bit_plane():
-	將灰階值轉成二進位置，使用者輸入要取第幾位數，若值為0灰階值設為0，值為1灰階值設為255
+	Convert the grayscale value into a binary position. The user inputs which digit to take. If the value is 0, the grayscale value is set to 0. If the value is 1, the grayscale value is set to 255.
 smoothing():
-	平均附近pixel的灰階值，將中間的pixel取代為平均值，使用者輸入的值越大，平均的範圍越大
+	Average the grayscale values ​​of nearby pixels and replace the middle pixels with the average value. The larger the value entered by the user, the larger the average range.
 sharpening():
-	原圖灰階值 * (輸入值 + 1) - smooting後的原圖灰階值 * (輸入值)
+	Grayscale value of the original image * (input value + 1) - Grayscale value of the original image after smoothing * (input value)
 median():
-	取附近pixel灰階值的中位數，將中間的pixel取代為中位數，使用者輸入的值越大，取值的範圍越大
+	Take the median of the grayscale values ​​of nearby pixels and replace the middle pixel with the median. The larger the value entered by the user, the larger the range of values.
 Laplacian():
-	原圖灰階值 - 轉換後圖片的灰階值(轉換的矩陣[1, 1, 1,
-					           1, -8, 1,
-					           1, 1, 1] 9個轉換後的值取代原本中間的值)
-log_mag_pha_img(): 
+	Grayscale value of the original image - Grayscale value of the converted image 
+	(converted matrix: 
+	[1, 1, 1,
+	1, -8, 1,
+	1, 1, 1] 
+	9 converted values ​​replace the original middle value)
+log_mag_pha_img():
 	Show Log|F(u, v)|, magnitude-only image, phase-only image.
 	Using numpy, matplotlib.pyplot.subplots
-step1_5(): 
+	step1_5():
 	step.1 Multiplying the image by (-1)^(x+y)
 	step.2 Computing the DFT
 	step.3 Taking the complex conjugate of the transform
@@ -79,8 +86,8 @@ hsi_to_rgb(h, s, i):
 	HSI to RGB.
 	Using math
 rgb_to_h_s_i_subplot():
-	Plot Hue, saturation, Intenstity image by image's RGB value.
-	rgb_to_hsi()
+	Plot Hue, saturation, Intensity image by image's RGB value.
+rgb_to_hsi():
 	Using matplotlib.pyplot.subplots()
 rgb_complements():
 	RGB complements to enhance the detail.
@@ -95,27 +102,27 @@ seg_fea_mask():
 	rgb_to_hsi()
 	Using matplotlib.pyplot.subplots()
 
-<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+<><><><><><><><><><><><><><><><><><><><><> Homework #3's problems <><><><><><><><><><><><><><><><><><><><><>
 
-Promblem. 1
-	Spatial Filters (degree): [    ] [Arithmetic mean smoothing]
-Promblem. 2
-	2D FFT: [do]
-Promblem. 3
-	DFT Step. (1)-(5): [do]
-	(b)
-	   step. 1  (-1)^(x+y)原白色部分的區塊 x+y 是奇數的 pixel 為黑色
-	   step. 2  DFT 時域轉頻域
-	   step. 3  取虛數共軛
-	   step. 4  DFT 逆轉換頻域轉時域
-	   step. 5  因為共軛所以圖片上下顛倒
-Promblem. 4
-	(a)  [Display image]
-	(b)  Component image: [do]
-	(c)  Convert RGB to HSI: [do]
-	(d)  RGB color complement (Enhance the detail): [do]
-	(e)  Sharping with the Laplacian to this image by using RGB: [do] (此功能需要跑比較久😅不是出 bug 喔)
-	(f)  Segmenting the feathers: [do]
+Problem. 1
+Spatial Filters (degree): [ ] [Arithmetic mean smoothing]
+Problem. 2
+2D FFT: [do]
+Problem. 3
+DFT Step. (1)-(5): [do]
+(b)
+step. 1 (-1)^(x+y) The original white part of the block where x+y is an odd number of pixels is black.
+step. 2 DFT time domain to frequency domain
+step. 3 Take the conjugate of the imaginary number
+step. 4 DFT inverse conversion from frequency domain to time domain
+step. 5 Because of conjugation, the picture is upside down
+Problem. 4
+(a) [Display image]
+(b) Component image: [do]
+(c) Convert RGB to HSI: [do]
+(d) RGB color complement (Enhance the detail): [do]
+(e) Sharping with the Laplacian to this image by using RGB: [do] (This function takes a long time to run😅It is not a bug)
+(f) Segmenting the feathers: [do]
 
-如果要比較影像處理前後的差異，可以在做完每個步驟後按下 [Display image] 按鈕，顯示當前影像處理的結果
-[Reset current image] 按鈕，移除對原本開啟圖片的所有影像處理
+If you want to compare the differences before and after image processing, you can press the [Display image] button after completing each step to display the results of the current image processing.
+[Reset current image] button to remove all image processing on the originally opened image
