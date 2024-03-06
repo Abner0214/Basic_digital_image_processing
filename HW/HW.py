@@ -912,7 +912,7 @@ canvas.configure(xscrollcommand=h_scroll.set, yscrollcommand=v_scroll.set)
         ### open / save / display
 # Label
 # lbl_open = ttk.Label(window, text = "First step  ========  OPEN   ====   ==   = > ",font = ("Arial", 12))
-lbl_save_display = ttk.Label(window, text = "Please enter a file name to Save / Display the image (contain filename extenstion)",font = ("Arial", 10))
+lbl_save_display = ttk.Label(window, text = "Please enter a file name to save the image (contain filename extenstion)",font = ("Arial", 10))
 # Entry
 entry_fileName = ttk.Entry(window, width = 20)
 # Button
@@ -930,7 +930,7 @@ btn_htg_eql = ttk.Button(window, text = "Equalize", command = auto_level)
 
         ### Adjust contrast / brightness of images
 # Label
-lbl_bri = ttk.Label(window, text = "Adjust contrast / brightness (aX + b, exp(aX + b), ln(aX + b), b > 1)   |   a: [ integer ] b: [ > 1 ]")
+lbl_bri = ttk.Label(window, text = "Adjust contrast / brightness (aX + b, exp(aX + b), ln(aX + b), b > 1)   |   a: [ integer ],  b: [ > 1 ]")
 # lbl_a = tk.Label(window, text = "a :")
 # lbl_b = tk.Label(window, text = "b :")
 # Entry
@@ -943,7 +943,7 @@ btn_log = ttk.Button(window, text = "Log", command = lambda: log_adj(float(entry
     
         ### Zoom in and shrink
 # Label
-lbl_resize = ttk.Label(window, text = "Resize the image (by percentage)   |   [ > 0 ]")
+lbl_resize = ttk.Label(window, text = "Resize the image (by percentage)   |   [ > 0 integer ]")
 # Entry
 entry_resize = ttk.Entry(window, width = 8)
 # Button
@@ -962,7 +962,7 @@ if_prs_btn = True
 if_prs_text = tk.StringVar()
 if_prs_text.set("Yes")
 # Label
-lbl_slc = ttk.Label(window, text = "Gray-level slicing   |   Lowbound: [ 0 - 255 ] Upperbound: [ 0 - 255 ]")
+lbl_slc = ttk.Label(window, text = "Gray-level slicing   |   Lowbound: [ 0 - 255 integer ], Upperbound: [ 0 - 255 integer ]")
 # lbl_lowerbound = ttk.Label(window, text = "Lowbound:")
 # lbl_upperbound = ttk.Label(window, text = "Upperbound:")
 lbl_prs = ttk.Label(window, text = "Preserve?")
@@ -975,7 +975,7 @@ btn_if_prs = ttk.Button(window, textvariable = if_prs_text, command = prs_change
 
         ### Bit-plane image
 # Label
-lbl_bit_plane = ttk.Label(window, text = "Bit-plane image   |   [ 1 - 7 ]")
+lbl_bit_plane = ttk.Label(window, text = "Bit-plane image   |   [ 1 - 7 integer ]")
 # Entry
 entry_bit_plane = ttk.Entry(window, width = 8)
 # Button
@@ -983,7 +983,7 @@ btn_bit_plane = ttk.Button(window, text = "Slice", command = bit_plane)
 
         ### [Spatial Filters] smoothing / sharpening / median filter / Laplacian mask
 # Label
-lbl_spt_flt = ttk.Label(window, text = "Spatial Filters (degree)   |   [ integer ]")
+lbl_spt_flt = ttk.Label(window, text = "Spatial Filters   |  degree: [ integer ]")
 # Entry
 entry_degree = ttk.Entry(window, width = 8)
 # Button
