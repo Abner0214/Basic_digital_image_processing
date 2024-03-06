@@ -544,7 +544,7 @@ btn_img1_rgb = tk.Button(window, text = "RGB color wheel", command = fill_img1_R
 btn_img2_rgb = tk.Button(window, text = "RGB color wheel", command = fill_img2_RGB)
         ### Color block
 # Label
-lbl_block = tk.Label(window, text = "Color block [ x ] [ y ] Difference: [  ]%: ")
+lbl_block = tk.Label(window, text = "Color diffusion   |   from [ x ] [ y ] Difference threshold: [  ]%: ")
 # Entry
 entry_x = tk.Entry(window, width = 5)
 entry_y = tk.Entry(window, width = 5)
@@ -555,7 +555,7 @@ btn_block = tk.Button(window, text = "Color", command = make_color_block)
 lbl_n_rgb = tk.Label(window, text = "RGB complement : ")
 btn_n_rgb = tk.Button(window, text = "Do", command = use_rgb_comp)
         ### RGB smoothing
-lbl_rgb_smo = tk.Label(window, text = "RGB soothing [ degree ] : ")
+lbl_rgb_smo = tk.Label(window, text = "RGB soothing   |  degree: [ integer ] ")
 entry_degree = tk.Entry(window, width = 5)
 btn_rgb_smo = tk.Button(window, text = "Do", command = use_rgb_smooth)
     ## Convert RGB to HSI model ,and display its Hue, Saturation, and Intensity components as gray-level images respectively.
