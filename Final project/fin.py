@@ -544,7 +544,7 @@ btn_img1_rgb = tk.Button(window, text = "RGB color wheel", command = fill_img1_R
 btn_img2_rgb = tk.Button(window, text = "RGB color wheel", command = fill_img2_RGB)
         ### Color block
 # Label
-lbl_block = tk.Label(window, text = "Color block [ x ] [ y ] [ Difference (?%) ] : ")
+lbl_block = tk.Label(window, text = "Color block [ x ] [ y ] Difference: [  ]%: ")
 # Entry
 entry_x = tk.Entry(window, width = 5)
 entry_y = tk.Entry(window, width = 5)
