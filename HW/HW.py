@@ -16,7 +16,7 @@ def update_display_canvas(photo_image):
     canvas.config(scrollregion=canvas.bbox('all'))
 
 def showProcessing():
-    Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 2)
+    Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
     window.update_idletasks()
 
 # open image
