@@ -388,7 +388,7 @@ def rgb_to_h_s_i_subplot():
     window.update_idletasks()
     #fig.canvas.set_window_title("Problem. 3")
 
-    fig.set_figheight(8)
+    fig.set_figheight(4)
     fig.set_figwidth(12)
     plt.show()
 
@@ -460,13 +460,13 @@ Dynamic_Island = tk.Label(window, text = "Please open an image first", bg = "gol
 
                     ######  Define  ######
         ### ========================
-lbl___0_ = tk.Label(window, text = "==============================")
-lbl___1_ = tk.Label(window, text = "==============================")
-lbl___2_ = tk.Label(window, text = "==============================")
-lbl___3_ = tk.Label(window, text = "==============================")
-lbl___4_ = tk.Label(window, text = "==============================")
-lbl___5_ = tk.Label(window, text = "==============================")
-lbl___6_ = tk.Label(window, text = "==============================")
+lbl___0_ = tk.Label(window, text = "=================================")
+lbl___1_ = tk.Label(window, text = "=================================")
+lbl___2_ = tk.Label(window, text = "=================================")
+lbl___3_ = tk.Label(window, text = "=================================")
+lbl___4_ = tk.Label(window, text = "=================================")
+lbl___5_ = tk.Label(window, text = "=================================")
+lbl___6_ = tk.Label(window, text = "=================================")
         ### open / save / dispaly   ### open .raw file  ### Haruki reset!
 # Label
 # Entry
