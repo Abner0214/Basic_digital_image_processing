@@ -1048,34 +1048,35 @@ lbl_______color_img = ttk.Label(window, text=" ######################  Color ima
 Dynamic_Island.grid(row = 0, column = 0, columnspan = 15, rowspan = 1)
 # Open image
 btn_open.grid(row = 1, column = 1)
-# Display image
-btn_display.grid(row = 3, column = 0)  
-#  Save image
-lbl_save_display.grid(row = 4, column = 0)
-entry_fileName.grid(row = 4, column = 1)
-btn_save.grid(row = 4, column = 2)
 # open .raw image file
 btn_raw.grid(row = 1, column = 2)
 # Haruki reset!
 btn_reset.grid(row = 2, column = 1)
-lbl_______grayscale_img.grid(row = 5, column = 0)                 
-# Adjust contrast / brightness of images
-lbl_bri.grid(row = 6, column = 0)
-# lbl_a.grid(row = 6, column = 1)
-entry_a.grid(row = 6, column = 1)
-# lbl_b.grid(row = 6, column = 3)
-entry_b.grid(row = 6, column = 2)
-btn_lin.grid(row = 6, column = 3)
-btn_exp.grid(row = 6, column = 4)
-btn_log.grid(row = 6, column = 5)
+# Display image
+btn_display.grid(row = 3, column = 0)
+#  Save image
+lbl_save_display.grid(row = 4, column = 0)
+entry_fileName.grid(row = 4, column = 1)
+btn_save.grid(row = 4, column = 2)
 # Zoom in and shrink
-lbl_resize.grid(row = 7, column = 0)
-entry_resize.grid(row = 7, column = 1)
-btn_resize.grid(row = 7, column = 2)
+lbl_resize.grid(row = 5, column = 0)
+entry_resize.grid(row = 5, column = 1)
+btn_resize.grid(row = 5, column = 2)
 # Rotate
-lbl_rot.grid(row = 8, column = 0)
-entry_rot.grid(row = 8, column = 1)
-btn_rot.grid(row = 8, column = 2)
+lbl_rot.grid(row = 6, column = 0)
+entry_rot.grid(row = 6, column = 1)
+btn_rot.grid(row = 6, column = 2)  
+# ############## Grayscale image #################
+lbl_______grayscale_img.grid(row = 7, column = 0)           
+# Adjust contrast / brightness of images
+lbl_bri.grid(row = 8, column = 0)
+# lbl_a.grid(row = 6, column = 1)
+entry_a.grid(row = 8, column = 1)
+# lbl_b.grid(row = 6, column = 3)
+entry_b.grid(row = 8, column = 2)
+btn_lin.grid(row = 8, column = 3)
+btn_exp.grid(row = 8, column = 4)
+btn_log.grid(row = 8, column = 5)
 # Gray-level slicing
 lbl_slc.grid(row = 9, column = 0)
 # lbl_lowerbound.grid(row = 9, column = 1)
