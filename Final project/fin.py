@@ -1,6 +1,7 @@
 import math
 from math import cos, radians , degrees , acos,sqrt
 import tkinter as tk
+from tkinter import ttk
 from tkinter import filedialog
 import PIL
 from PIL import Image, ImageTk
@@ -460,43 +461,43 @@ Dynamic_Island = tk.Label(window, text = "Please open an image first", bg = "gol
 
                     ######  Define  ######
         ### ========================
-lbl___0_ = tk.Label(window, text = "=================================")
-lbl___1_ = tk.Label(window, text = "=================================")
-lbl___2_ = tk.Label(window, text = "=================================")
-lbl___3_ = tk.Label(window, text = "=================================")
-lbl___4_ = tk.Label(window, text = "=================================")
-lbl___5_ = tk.Label(window, text = "=================================")
-lbl___6_ = tk.Label(window, text = "=================================")
+lbl___0_ = ttk.Label(window, text = "=================================")
+lbl___1_ = ttk.Label(window, text = "=================================")
+lbl___2_ = ttk.Label(window, text = "=================================")
+lbl___3_ = ttk.Label(window, text = "=================================")
+lbl___4_ = ttk.Label(window, text = "=================================")
+lbl___5_ = ttk.Label(window, text = "=================================")
+lbl___6_ = ttk.Label(window, text = "=================================")
         ### open / save / dispaly   ### open .raw file  ### Haruki reset!
 # Label
 # Entry
 # Button
-btn_open = tk.Button(window, text = "Open", command = open_img)
-btn_raw = tk.Button(window, text = "Open .raw", command = open_raw)
-btn_reset = tk.Button(window, text = "Reset", command = reset_img)
-btn_display = tk.Button(window, text = "Display", command = display_img)
-entry_fileName = tk.Entry(window, width = 15)
-btn_save = tk.Button(window, text = "Save", command = save_img)
+btn_open = ttk.Button(window, text = "Open", command = open_img)
+btn_raw = ttk.Button(window, text = "Open .raw", command = open_raw)
+btn_reset = ttk.Button(window, text = "Reset", command = reset_img)
+btn_display = ttk.Button(window, text = "Display", command = display_img)
+entry_fileName = ttk.Entry(window, width = 15)
+btn_save = ttk.Button(window, text = "Save", command = save_img)
         ### Watermark
 # Label
-lbl_watermark = tk.Label(window, text = "Add a watermark : ")
+lbl_watermark = ttk.Label(window, text = "Add a watermark : ")
 # Button
 NOW_img = Image.open(os.path.join("Image samples\Color image\Lenna_512_color.tif"))
 WATERMARK = Image.open(os.path.join("Image samples\Color image\Color wheel\color_wheel.png"))
 put_WATERMARK = Image.open(os.path.join("Image samples\Color image\Color wheel\color_wheel.png"))
-btn_cho_watermark = tk.Button(window, text = "Choice", command = open_watermark_img)
-btn_draw_watermark = tk.Button(window, text = "Draw", command = using_draw_watermark)
-btn_watermark = tk.Button(window, text = "Add", command = lambda: make_lowpass_watermark(NOW_img, WATERMARK))
-btn_slice = tk.Button(window, text = "Check", command = lambda: sheep.bit_plane_slic(put_WATERMARK, 0))
+btn_cho_watermark = ttk.Button(window, text = "Choice", command = open_watermark_img)
+btn_draw_watermark = ttk.Button(window, text = "Draw", command = using_draw_watermark)
+btn_watermark = ttk.Button(window, text = "Add", command = lambda: make_lowpass_watermark(NOW_img, WATERMARK))
+btn_slice = ttk.Button(window, text = "Check", command = lambda: sheep.bit_plane_slic(put_WATERMARK, 0))
         ### Black and white overlay
 # Label
-lbl_overlay = tk.Label(window, text = "Overlay two images: ")
-lbl_img1_rgba = tk.Label(window, text = "Image1 [ R ] [ G ] [ B ] [ A ] : ")
-lbl_img2_rgba = tk.Label(window, text = "Image2 [ R ] [ G ] [ B ] [ A ] : ")
-lbl_scale = tk.Label(window, text = "Image size to use [ x ] x [ y ] : ")
-lbl_img1_position = tk.Label(window, text = "Image1 position ([ x ], [ y ]) : ")
-lbl_img2_position = tk.Label(window, text = "Image2 position ([ x ], [ y ]) : ")
-lbl_slice = tk.Label(window, text = "Overlay from ([ x1 ], [ y1 ]) to ([ x2 ], [ y2 ]) : ")
+lbl_overlay = ttk.Label(window, text = "Overlay two images: ")
+lbl_img1_rgba = ttk.Label(window, text = "Image1 [ R ] [ G ] [ B ] [ A ] : ")
+lbl_img2_rgba = ttk.Label(window, text = "Image2 [ R ] [ G ] [ B ] [ A ] : ")
+lbl_scale = ttk.Label(window, text = "Image size to use [ x ] x [ y ] : ")
+lbl_img1_position = ttk.Label(window, text = "Image1 position ([ x ], [ y ]) : ")
+lbl_img2_position = ttk.Label(window, text = "Image2 position ([ x ], [ y ]) : ")
+lbl_slice = ttk.Label(window, text = "Overlay from ([ x1 ], [ y1 ]) to ([ x2 ], [ y2 ]) : ")
 # Entry
 global r1, g1, b1
 r1 = tk.IntVar()
@@ -505,10 +506,10 @@ b1 = tk.IntVar()
 r1.set(0)
 g1.set(0)
 b1.set(0)
-entry_img1_r = tk.Entry(window, width = 5, textvariable = r1)
-entry_img1_g = tk.Entry(window, width = 5, textvariable = g1)
-entry_img1_b = tk.Entry(window, width = 5, textvariable = b1)
-entry_img1_a = tk.Entry(window, width = 5)
+entry_img1_r = ttk.Entry(window, width = 5, textvariable = r1)
+entry_img1_g = ttk.Entry(window, width = 5, textvariable = g1)
+entry_img1_b = ttk.Entry(window, width = 5, textvariable = b1)
+entry_img1_a = ttk.Entry(window, width = 5)
 
 global r2, g2, b2
 r2 = tk.IntVar()
@@ -517,59 +518,59 @@ b2 = tk.IntVar()
 r2.set(0)
 g2.set(0)
 b2.set(0)
-entry_img2_r = tk.Entry(window, width = 5, textvariable = r2)
-entry_img2_g = tk.Entry(window, width = 5, textvariable = g2)
-entry_img2_b = tk.Entry(window, width = 5, textvariable = b2)
-entry_img2_a = tk.Entry(window, width = 5)
+entry_img2_r = ttk.Entry(window, width = 5, textvariable = r2)
+entry_img2_g = ttk.Entry(window, width = 5, textvariable = g2)
+entry_img2_b = ttk.Entry(window, width = 5, textvariable = b2)
+entry_img2_a = ttk.Entry(window, width = 5)
 
-entry_scale_x = tk.Entry(window, width = 5)
-entry_scale_y = tk.Entry(window, width = 5)
+entry_scale_x = ttk.Entry(window, width = 5)
+entry_scale_y = ttk.Entry(window, width = 5)
 
-entry_img1_x = tk.Entry(window, width = 5)
-entry_img1_y = tk.Entry(window, width = 5)
-entry_img2_x = tk.Entry(window, width = 5)
-entry_img2_y = tk.Entry(window, width = 5)
+entry_img1_x = ttk.Entry(window, width = 5)
+entry_img1_y = ttk.Entry(window, width = 5)
+entry_img2_x = ttk.Entry(window, width = 5)
+entry_img2_y = ttk.Entry(window, width = 5)
 
-entry_slice_x1 = tk.Entry(window, width = 5)
-entry_slice_y1 = tk.Entry(window, width = 5)
-entry_slice_x2 = tk.Entry(window, width = 5)
-entry_slice_y2 = tk.Entry(window, width = 5)
+entry_slice_x1 = ttk.Entry(window, width = 5)
+entry_slice_y1 = ttk.Entry(window, width = 5)
+entry_slice_x2 = ttk.Entry(window, width = 5)
+entry_slice_y2 = ttk.Entry(window, width = 5)
 # Button
 WHITE_img = Image.open(os.path.join("Image samples\Color image\Color wheel\color_wheel.png"))
 BLACK_img = Image.open(os.path.join("Image samples\Color image\Color wheel\color_wheel.png"))
-btn_white_img = tk.Button(window, text = "Image1", command = open_white_img)
-btn_black_img = tk.Button(window, text = "Image2", command = open_black_img)
-btn_overlay_img = tk.Button(window, text = "Overlay", command = lambda: make_camouflage_img_generater(WHITE_img, BLACK_img))
-btn_img1_rgb = tk.Button(window, text = "RGB color wheel", command = fill_img1_RGB)
-btn_img2_rgb = tk.Button(window, text = "RGB color wheel", command = fill_img2_RGB)
+btn_white_img = ttk.Button(window, text = "Image1", command = open_white_img)
+btn_black_img = ttk.Button(window, text = "Image2", command = open_black_img)
+btn_overlay_img = ttk.Button(window, text = "Overlay", command = lambda: make_camouflage_img_generater(WHITE_img, BLACK_img))
+btn_img1_rgb = ttk.Button(window, text = "RGB color wheel", command = fill_img1_RGB)
+btn_img2_rgb = ttk.Button(window, text = "RGB color wheel", command = fill_img2_RGB)
         ### Color block
 # Label
-lbl_block = tk.Label(window, text = "Color diffusion   |   from [ x ] [ y ] Difference threshold: [  ]%: ")
+lbl_block = ttk.Label(window, text = "Color diffusion   |   from [ x ] [ y ] Difference threshold: [  ]%: ")
 # Entry
-entry_x = tk.Entry(window, width = 5)
-entry_y = tk.Entry(window, width = 5)
-entry_range = tk.Entry(window, width = 5)
+entry_x = ttk.Entry(window, width = 5)
+entry_y = ttk.Entry(window, width = 5)
+entry_range = ttk.Entry(window, width = 5)
 # Button
-btn_block = tk.Button(window, text = "Color", command = make_color_block)
+btn_block = ttk.Button(window, text = "Color", command = make_color_block)
         ### RGB negative
-lbl_n_rgb = tk.Label(window, text = "RGB complement : ")
-btn_n_rgb = tk.Button(window, text = "Do", command = use_rgb_comp)
+lbl_n_rgb = ttk.Label(window, text = "RGB complement : ")
+btn_n_rgb = ttk.Button(window, text = "Do", command = use_rgb_comp)
         ### RGB smoothing
-lbl_rgb_smo = tk.Label(window, text = "RGB soothing   |  degree: [ integer ] ")
-entry_degree = tk.Entry(window, width = 5)
-btn_rgb_smo = tk.Button(window, text = "Do", command = use_rgb_smooth)
+lbl_rgb_smo = ttk.Label(window, text = "RGB soothing   |  degree: [ integer ] ")
+entry_degree = ttk.Entry(window, width = 5)
+btn_rgb_smo = ttk.Button(window, text = "Do", command = use_rgb_smooth)
     ## Convert RGB to HSI model ,and display its Hue, Saturation, and Intensity components as gray-level images respectively.
 # Label
-lbl_RGB_to_HSI = tk.Label(window, text = "Convert RGB to HSI :")
+lbl_RGB_to_HSI = ttk.Label(window, text = "Convert RGB to HSI :")
 # Button
-btn_RGB_to_HSI = tk.Button(window, text = "Do", command = rgb_to_h_s_i_subplot)
+btn_RGB_to_HSI = ttk.Button(window, text = "Do", command = rgb_to_h_s_i_subplot)
     ## Component image
 # Label
-lbl_com_img = tk.Label(window, text = "Component image :")
+lbl_com_img = ttk.Label(window, text = "Component image :")
 # Button
-btn_red_img = tk.Button(window, text = "Red", command = red_img)
-btn_green_img = tk.Button(window, text = "Green", command = green_img)
-btn_blue_img = tk.Button(window, text = "Blue", command = blue_img)
+btn_red_img = ttk.Button(window, text = "Red", command = red_img)
+btn_green_img = ttk.Button(window, text = "Green", command = green_img)
+btn_blue_img = ttk.Button(window, text = "Blue", command = blue_img)
 
                     ######  composition  ######
 ### Heading
