@@ -886,24 +886,45 @@ def seg_fea_mask():
 window = tk.Tk()
 window.title("Basic Digital Image Processing")
 
-Dynamic_Island = tk.Label(window, text = "Please open an image file first!", bg = "gold", font = ("Arial", 16), width = 80, height = 2)
+# Create a Canvas widget
+main_canvas = tk.Canvas(window)
+main_canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
+# Create a Scrollbar widget and attach it to the canvas
+scrollbar = tk.Scrollbar(window, command=main_canvas.yview)
+scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+main_canvas.configure(yscrollcommand=scrollbar.set)
+
+# Create a frame inside the canvas
+main_frame = tk.Frame(main_canvas)
+
+# Add the frame to the canvas
+main_canvas.create_window((0, 0), window=main_frame, anchor='nw')
+
+# Function to update the scrolling region to match the size of the frame
+def onFrameConfigure(event):
+    main_canvas.configure(scrollregion=main_canvas.bbox("all"))
+
+# Bind the function to the frame's configuration event
+main_frame.bind("<Configure>", onFrameConfigure)
+
+Dynamic_Island = tk.Label(main_frame, text = "Please open an image file first!", bg = "gold", font = ("Arial", 16), width = 80, height = 2)
                     ######  Define component ######
 
         ### Canvas and scrollbars for displaying the current image
 
 # Create a frame for the canvas and scrollbars
-frame = ttk.Frame(window)
-frame.grid(row=2, column=0, sticky='nw')
+img_frame = ttk.Frame(main_frame)
+img_frame.grid(row=2, column=0, sticky='nw')
 
 # Create a canvas within the frame
-canvas = tk.Canvas(frame, bg='lightgrey', width=512, height=512)
+canvas = tk.Canvas(img_frame, bg='lightgrey', width=512, height=512)
 canvas.grid(row=0, column=0, sticky='nw')
 
 # Add scrollbars to the canvas
-h_scroll = ttk.Scrollbar(frame, orient='horizontal', command=canvas.xview)
+h_scroll = ttk.Scrollbar(img_frame, orient='horizontal', command=canvas.xview)
 h_scroll.grid(row=1, column=0, sticky='ew')
-v_scroll = ttk.Scrollbar(frame, orient='vertical', command=canvas.yview)
+v_scroll = ttk.Scrollbar(img_frame, orient='vertical', command=canvas.yview)
 v_scroll.grid(row=0, column=1, sticky='ns')
 canvas.configure(xscrollcommand=h_scroll.set, yscrollcommand=v_scroll.set)
 
@@ -912,91 +933,91 @@ canvas.configure(xscrollcommand=h_scroll.set, yscrollcommand=v_scroll.set)
         ### open / save / display
 # Label
 # lbl_open = ttk.Label(window, text = "First step  ========  OPEN   ====   ==   = > ",font = ("Arial", 12))
-lbl_save_display = ttk.Label(window, text = "Please enter a file name to save the image (contain filename extenstion)",font = ("Arial", 10))
+lbl_save_display = ttk.Label(main_frame, text = "Please enter a file name to save the image (contain filename extenstion)",font = ("Arial", 10))
 # Entry
-entry_fileName = ttk.Entry(window, width = 20)
+entry_fileName = ttk.Entry(main_frame, width = 20)
 # Button
-btn_open = ttk.Button(window, text = "Open an image", command = open_img)
-btn_save = ttk.Button(window, text = "Save image", command = save_img)
-btn_display = ttk.Button(window, text = "Keep above image in an indenpendent window", command = display_img)
+btn_open = ttk.Button(main_frame, text = "Open an image", command = open_img)
+btn_save = ttk.Button(main_frame, text = "Save image", command = save_img)
+btn_display = ttk.Button(main_frame, text = "Keep above image in an indenpendent window", command = display_img)
         ### open .raw image file
-btn_raw = ttk.Button(window, text = "Open a .raw image", command = open_raw)
+btn_raw = ttk.Button(main_frame, text = "Open a .raw image", command = open_raw)
         ### Haruki reset!
-btn_reset = ttk.Button(window, text = "Reset image", command = reset_img)
+btn_reset = ttk.Button(main_frame, text = "Reset image", command = reset_img)
         ### Display the histogram of images
-lbl_eql = ttk.Label(window, text = "Histogram Equalization")
-btn_htg = ttk.Button(window, text = "Display histogram", command = display_htg)
-btn_htg_eql = ttk.Button(window, text = "Equalize", command = auto_level)
+lbl_eql = ttk.Label(main_frame, text = "Histogram Equalization")
+btn_htg = ttk.Button(main_frame, text = "Display histogram", command = display_htg)
+btn_htg_eql = ttk.Button(main_frame, text = "Equalize", command = auto_level)
 
         ### Adjust contrast / brightness of images
 # Label
-lbl_bri = ttk.Label(window, text = "Adjust contrast / brightness (aX + b, exp(aX + b), ln(aX + b), b > 1)   |   a: [ integer ],  b: [ > 1 ]")
-# lbl_a = tk.Label(window, text = "a :")
-# lbl_b = tk.Label(window, text = "b :")
+lbl_bri = ttk.Label(main_frame, text = "Adjust contrast / brightness (aX + b, exp(aX + b), ln(aX + b), b > 1)   |   a: [ integer ],  b: [ > 1 ]")
+# lbl_a = tk.Label(main_frame, text = "a :")
+# lbl_b = tk.Label(main_frame, text = "b :")
 # Entry
-entry_a = ttk.Entry(window, width = 8)
-entry_b = ttk.Entry(window, width = 8)
+entry_a = ttk.Entry(main_frame, width = 8)
+entry_b = ttk.Entry(main_frame, width = 8)
 # Button
-btn_lin = ttk.Button(window, text = "Linear", command = lambda: lin_adj(float(entry_a.get()), float(entry_b.get())))
-btn_exp = ttk.Button(window, text = "Exp", command = lambda: exp_adj(float(entry_a.get()), float(entry_b.get())))
-btn_log = ttk.Button(window, text = "Log", command = lambda: log_adj(float(entry_a.get()), float(entry_b.get())))
+btn_lin = ttk.Button(main_frame, text = "Linear", command = lambda: lin_adj(float(entry_a.get()), float(entry_b.get())))
+btn_exp = ttk.Button(main_frame, text = "Exp", command = lambda: exp_adj(float(entry_a.get()), float(entry_b.get())))
+btn_log = ttk.Button(main_frame, text = "Log", command = lambda: log_adj(float(entry_a.get()), float(entry_b.get())))
     
         ### Zoom in and shrink
 # Label
-lbl_resize = ttk.Label(window, text = "Resize the image (by percentage)   |   [ > 0 integer ]")
+lbl_resize = ttk.Label(main_frame, text = "Resize the image (by percentage)   |   [ > 0 integer ]")
 # Entry
-entry_resize = ttk.Entry(window, width = 8)
+entry_resize = ttk.Entry(main_frame, width = 8)
 # Button
-btn_resize = ttk.Button(window, text = "Resize", command  = lambda: resize_img(int(entry_resize.get())))
+btn_resize = ttk.Button(main_frame, text = "Resize", command  = lambda: resize_img(int(entry_resize.get())))
 
         ### Rotate  
 # Label
-lbl_rot = ttk.Label(window, text = "Rotate the image (by degrees)   |   [ integer ]")
+lbl_rot = ttk.Label(main_frame, text = "Rotate the image (by degrees)   |   [ integer ]")
 # Entry
-entry_rot = ttk.Entry(window, width = 8)
+entry_rot = ttk.Entry(main_frame, width = 8)
 # Button
-btn_rot = ttk.Button(window, text = "Rotate", command = lambda: rotate_img(int(entry_rot.get())))
+btn_rot = ttk.Button(main_frame, text = "Rotate", command = lambda: rotate_img(int(entry_rot.get())))
 
         ### Gray-level slicing
 if_prs_btn = True
 if_prs_text = tk.StringVar()
 if_prs_text.set("Yes")
 # Label
-lbl_slc = ttk.Label(window, text = "Gray-level slicing   |   Lowbound: [ 0 - 255 integer ], Upperbound: [ 0 - 255 integer ]")
-# lbl_lowerbound = ttk.Label(window, text = "Lowbound:")
-# lbl_upperbound = ttk.Label(window, text = "Upperbound:")
-lbl_prs = ttk.Label(window, text = "Preserve?")
+lbl_slc = ttk.Label(main_frame, text = "Gray-level slicing   |   Lowbound: [ 0 - 255 integer ], Upperbound: [ 0 - 255 integer ]")
+# lbl_lowerbound = ttk.Label(main_frame, text = "Lowbound:")
+# lbl_upperbound = ttk.Label(main_frame, text = "Upperbound:")
+lbl_prs = ttk.Label(main_frame, text = "Preserve?")
 # Entry
-entry_lowerbound = ttk.Entry(window, width = 8)
-entry_upperbound = ttk.Entry(window, width = 8)
+entry_lowerbound = ttk.Entry(main_frame, width = 8)
+entry_upperbound = ttk.Entry(main_frame, width = 8)
 # Button
-btn_slc = ttk.Button(window, text = "Slice", command = lambda: gray_lvl_slc(int(entry_lowerbound.get()), int(entry_upperbound.get()), if_prs_btn))
-btn_if_prs = ttk.Button(window, textvariable = if_prs_text, command = prs_change)
+btn_slc = ttk.Button(main_frame, text = "Slice", command = lambda: gray_lvl_slc(int(entry_lowerbound.get()), int(entry_upperbound.get()), if_prs_btn))
+btn_if_prs = ttk.Button(main_frame, textvariable = if_prs_text, command = prs_change)
 
         ### Bit-plane image
 # Label
-lbl_bit_plane = ttk.Label(window, text = "Bit-plane image   |   [ 1 - 7 integer ]")
+lbl_bit_plane = ttk.Label(main_frame, text = "Bit-plane image   |   [ 1 - 7 integer ]")
 # Entry
-entry_bit_plane = ttk.Entry(window, width = 8)
+entry_bit_plane = ttk.Entry(main_frame, width = 8)
 # Button
-btn_bit_plane = ttk.Button(window, text = "Slice", command = bit_plane)
+btn_bit_plane = ttk.Button(main_frame, text = "Slice", command = bit_plane)
 
         ### [Spatial Filters] smoothing / sharpening / median filter / Laplacian mask
 # Label
-lbl_spt_flt = ttk.Label(window, text = "Spatial Filters   |  degree: [ integer ]")
+lbl_spt_flt = ttk.Label(main_frame, text = "Spatial Filters   |  degree: [ integer ]")
 # Entry
-entry_degree = ttk.Entry(window, width = 8)
+entry_degree = ttk.Entry(main_frame, width = 8)
 # Button
-btn_smt = ttk.Button(window, text = "Mean", command = smoothing)
-btn_shp = ttk.Button(window, text = "Sharpening", command = sharpening)
-btn_med = ttk.Button(window, text = "Median", command = median)
-btn_lpl = ttk.Button(window, text = "Laplacian", command = Laplacian)
+btn_smt = ttk.Button(main_frame, text = "Mean", command = smoothing)
+btn_shp = ttk.Button(main_frame, text = "Sharpening", command = sharpening)
+btn_med = ttk.Button(main_frame, text = "Median", command = median)
+btn_lpl = ttk.Button(main_frame, text = "Laplacian", command = Laplacian)
 
         ### log |F(u,v)|  &  Magnitude and Phase images
 # Label
-lbl_log_mag_pha_img = ttk.Label(window, text = "2D FFT processing")
+lbl_log_mag_pha_img = ttk.Label(main_frame, text = "2D FFT processing")
 # Button
-btn_log_mag_pha_img = ttk.Button(window, text = "Do", command = log_mag_pha_img)
+btn_log_mag_pha_img = ttk.Button(main_frame, text = "Do", command = log_mag_pha_img)
 
         ### 3. step. (1) - (5)
     ## Multiplying the image by (-1)^(x+y)
@@ -1005,43 +1026,43 @@ btn_log_mag_pha_img = ttk.Button(window, text = "Do", command = log_mag_pha_img)
     ## Computing the inverse DFT
     ## Multiplying the real part of the result by (-1)^(x+y)
 # Label
-lbl_step1_5 = ttk.Label(window, text = "DFT processing")
+lbl_step1_5 = ttk.Label(main_frame, text = "DFT processing")
 # Button
-btn_step1_5 = ttk.Button(window, text = "Do", command = step1_5)
+btn_step1_5 = ttk.Button(main_frame, text = "Do", command = step1_5)
 
         ### 4. (b) - (f)
     ## Component image
 # Label
-lbl_com_img = ttk.Label(window, text = "Component image ")
+lbl_com_img = ttk.Label(main_frame, text = "Component image ")
 # Button
-btn_red_img = ttk.Button(window, text = "Red", command = red_img)
-btn_green_img = ttk.Button(window, text = "Green", command = green_img)
-btn_blue_img = ttk.Button(window, text = "Blue", command = blue_img)
+btn_red_img = ttk.Button(main_frame, text = "Red", command = red_img)
+btn_green_img = ttk.Button(main_frame, text = "Green", command = green_img)
+btn_blue_img = ttk.Button(main_frame, text = "Blue", command = blue_img)
     ## Convert RGB to HSI model ,and display its Hue, Saturation, and Intensity components as gray-level images respectively.
 # Label
-lbl_RGB_to_HSI = ttk.Label(window, text = "Convert RGB to HSI")
+lbl_RGB_to_HSI = ttk.Label(main_frame, text = "Convert RGB to HSI")
 # Button
-btn_RGB_to_HSI = ttk.Button(window, text = "Do", command = rgb_to_h_s_i_subplot)
+btn_RGB_to_HSI = ttk.Button(main_frame, text = "Do", command = rgb_to_h_s_i_subplot)
     ## Do color complements by using RGB model
 # Label
-lbl_rgb_cpm = ttk.Label(window, text = "RGB color complementary image (To enhance the detail)")
+lbl_rgb_cpm = ttk.Label(main_frame, text = "RGB color complementary image (To enhance the detail)")
 # Button
-btn_rgb_cpm = ttk.Button(window, text = "Do", command = rgb_complements)
+btn_rgb_cpm = ttk.Button(main_frame, text = "Do", command = rgb_complements)
 
     ## Sharping with the Laplacian to this image by using RGB and HSI models
 # Label
-lbl_rgb_hsi_sharping = ttk.Label(window, text = "Sharping with the Laplacian to this image by using RGB and HSI models")
+lbl_rgb_hsi_sharping = ttk.Label(main_frame, text = "Sharping with the Laplacian to this image by using RGB and HSI models")
 # Button
-btn_rgb_hsi_sharping = ttk.Button(window, text = "Do", command = rgb_hsi_sharping)
+btn_rgb_hsi_sharping = ttk.Button(main_frame, text = "Do", command = rgb_hsi_sharping)
     ## segmenting the feathers
-lbl_seg_fea = ttk.Label(window, text = "Segmenting the feathers of \"Lenna_512_color.tif\"")
+lbl_seg_fea = ttk.Label(main_frame, text = "Segmenting the feathers of \"Lenna_512_color.tif\"")
 # Button
-btn_seg_fea = ttk.Button(window, text = "Do", command = seg_fea_mask)
+btn_seg_fea = ttk.Button(main_frame, text = "Do", command = seg_fea_mask)
 
 # ======== Grayscale image ========
-lbl_______grayscale_img = ttk.Label(window, text=" ######################  Grayscale image  ###################### ")
+lbl_______grayscale_img = ttk.Label(main_frame, text=" ######################  Grayscale image  ###################### ")
 # ========== Color image ==========
-lbl_______color_img = ttk.Label(window, text=" ######################  Color image  ###################### ")
+lbl_______color_img = ttk.Label(main_frame, text=" ######################  Color image  ###################### ")
 
                     ######  composition  ######
 # Heading
@@ -1128,7 +1149,7 @@ lbl_seg_fea.grid(row = 24, column = 0)
 btn_seg_fea.grid(row = 24, column = 1)
 
 # After adding all widgets, update the scrollregion of the canvas
-window.update_idletasks()
+main_frame.update_idletasks()
 canvas.config(scrollregion=canvas.bbox("all"))
 
 window.mainloop()
