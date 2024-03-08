@@ -9,11 +9,11 @@ import numpy
 
 
 global current_photo_image
-def update_display_canvas(photo_image):
+def update_display_img_canvas(photo_image):
     global current_photo_image
     current_photo_image = photo_image  # Store the reference globally
-    canvas.create_image(0, 0, anchor='nw', image=current_photo_image)
-    canvas.config(scrollregion=canvas.bbox('all'))
+    img_canvas.create_image(0, 0, anchor='nw', image=current_photo_image)
+    img_canvas.config(scrollregion=img_canvas.bbox('all'))
 
 def showProcessing():
     Dynamic_Island.config(text = "Processing ...", bg = "green3", font = ("Arial", 14), width = 30, height = 1)
@@ -34,7 +34,7 @@ def open_img():
     ORIGNAL_open_img_copy = ORIGNAL_open_img.copy()
     ORIGNAL_PhotoImage = ImageTk.PhotoImage(ORIGNAL_open_img)
     
-    update_display_canvas(ORIGNAL_PhotoImage)
+    update_display_img_canvas(ORIGNAL_PhotoImage)
     
     nameStr = File_path.split("/")
     Dynamic_Island.config(text = "You open this image: " + nameStr[-1] , bg = "AntiqueWhite1", font = ("Arial", 16), width = 80, height = 2)
@@ -56,7 +56,7 @@ def open_raw():
     ORIGNAL_open_img_copy = ORIGNAL_open_img.copy()
     ORIGNAL_PhotoImage = ImageTk.PhotoImage(ORIGNAL_open_img)
     
-    update_display_canvas(ORIGNAL_PhotoImage)
+    update_display_img_canvas(ORIGNAL_PhotoImage)
 
     nameStr = File_path.split("/")
     Dynamic_Island.config(text = "You open this .raw image file: " + nameStr[-1] , bg = "AntiqueWhite1", font = ("Arial", 16), width = 80, height = 2)
@@ -76,7 +76,7 @@ def reset_img():
     global ORIGNAL_PhotoImage
 
     ORIGNAL_open_img_copy = ORIGNAL_open_img.copy()
-    update_display_canvas(ORIGNAL_PhotoImage)
+    update_display_img_canvas(ORIGNAL_PhotoImage)
 
     global File_path
     nameStr = File_path.split("/")
@@ -120,7 +120,7 @@ def lin_adj(a, b):
             ORIGNAL_open_img_copy.putpixel((i, j), X)
 
     photo_image = ImageTk.PhotoImage(ORIGNAL_open_img_copy)
-    update_display_canvas(photo_image)
+    update_display_img_canvas(photo_image)
     #X = 1
     #global ORIGNAL_open_img_copy
     #new_img = ImageEnhance.Brightness(ORIGNAL_open_img_copy).enhance(a * X + b)
@@ -141,7 +141,7 @@ def exp_adj(a, b):
             ORIGNAL_open_img_copy.putpixel((i, j), X)
 
     photo_image = ImageTk.PhotoImage(ORIGNAL_open_img_copy)
-    update_display_canvas(photo_image)
+    update_display_img_canvas(photo_image)
     #X = 1
     #global ORIGNAL_open_img_copy
     #new_img = ImageEnhance.Brightness(ORIGNAL_open_img_copy).enhance(math.exp(a * X + b))
@@ -169,7 +169,7 @@ def log_adj(a, b):
             ORIGNAL_open_img_copy.putpixel((i, j), X)
 
     photo_image = ImageTk.PhotoImage(ORIGNAL_open_img_copy)
-    update_display_canvas(photo_image)
+    update_display_img_canvas(photo_image)
     #X = 1
     #global ORIGNAL_open_img_copy
     #new_img = ImageEnhance.Brightness(ORIGNAL_open_img_copy).enhance(math.log(a * X + b))
@@ -186,7 +186,7 @@ def resize_img(perc):
     new_img = ORIGNAL_open_img_copy.resize((ORIGNAL_open_img_copy.size[0] * perc // 100, ORIGNAL_open_img_copy.size[1] * perc // 100))
     ORIGNAL_open_img_copy = new_img
     photo_image = ImageTk.PhotoImage(new_img)
-    update_display_canvas(photo_image)
+    update_display_img_canvas(photo_image)
 
     global Dynamic_Island
     Dynamic_Island.config(text = "Resize " + str(perc) + " %", bg = "DarkOrange", font = ("Arial", 14), width = 30, height = 2)
@@ -201,7 +201,7 @@ def rotate_img(degrees):
     new_img = ORIGNAL_open_img_copy.rotate(degrees, expand = "yes")
     ORIGNAL_open_img_copy = new_img
     photo_image = ImageTk.PhotoImage(new_img)
-    update_display_canvas(photo_image)
+    update_display_img_canvas(photo_image)
 
     global Dynamic_Island
     if degrees > 0 :
@@ -225,7 +225,7 @@ def gray_lvl_slc(lowerbound, upperbound, keep = True):
 
     ORIGNAL_open_img_copy = new_img
     photo_image = ImageTk.PhotoImage(new_img)
-    update_display_canvas(photo_image)
+    update_display_img_canvas(photo_image)
 
     global Dynamic_Island
     Dynamic_Island.config(text = "Gray-level slicing ", bg = "dim grey", font = ("Arial", 14), width = 60, height = 2)
@@ -290,7 +290,7 @@ def auto_level():
     
     ORIGNAL_open_img_copy = new_img
     photo_image = ImageTk.PhotoImage(new_img)
-    update_display_canvas(photo_image)
+    update_display_img_canvas(photo_image)
 
     Dynamic_Island.config(text = "Histogram equlization!", bg = "gold", font = ("Arial", 14), width = 80, height = 2)
     window.update_idletasks()
@@ -319,7 +319,7 @@ def bit_plane():
     
     ORIGNAL_open_img_copy = new_img
     photo_image = ImageTk.PhotoImage(new_img)
-    update_display_canvas(photo_image)
+    update_display_img_canvas(photo_image)
 
     Dynamic_Island.config(text = "Bit-plane: " + str(plane), bg = "gold", font = ("Arial", 14), width = 80, height = 2)
     window.update_idletasks()
@@ -349,7 +349,7 @@ def smoothing():
 
     ORIGNAL_open_img_copy = new_img
     photo_image = ImageTk.PhotoImage(new_img)
-    update_display_canvas(photo_image)
+    update_display_img_canvas(photo_image)
     
     Dynamic_Island.config(text = "Smoothing!", bg = "gold", font = ("Arial", 14), width = 80, height = 2)
     window.update_idletasks()
@@ -375,7 +375,7 @@ def sharpening():
 
     ORIGNAL_open_img_copy = new_img
     photo_image = ImageTk.PhotoImage(new_img)
-    update_display_canvas(photo_image)
+    update_display_img_canvas(photo_image)
 
     Dynamic_Island.config(text = "Sharpening!", bg = "DarkSlateGray3", font = ("Arial", 14), width = 80, height = 2)
     window.update_idletasks()
@@ -402,7 +402,7 @@ def median():
     
     ORIGNAL_open_img_copy = new_img
     photo_image = ImageTk.PhotoImage(new_img)
-    update_display_canvas(photo_image)
+    update_display_img_canvas(photo_image)
 
     Dynamic_Island.config(text = "Median filter!", bg = "DarkSlateGray3", font = ("Arial", 14), width = 80, height = 2)
     window.update_idletasks()
@@ -430,7 +430,7 @@ def Laplacian():
             
     ORIGNAL_open_img_copy = new_img
     photo_image = ImageTk.PhotoImage(new_img)
-    update_display_canvas(photo_image)
+    update_display_img_canvas(photo_image)
 
     Dynamic_Island.config(text = "Wearing Laplacian mask!", bg = "DarkSlateGray3", font = ("Arial", 14), width = 80, height = 2)
     window.update_idletasks()
@@ -885,21 +885,21 @@ def seg_fea_mask():
 
 window = tk.Tk()
 window.title("Basic Digital Image Processing")
+window.geometry("1100x1100")
 
 # Create a Canvas widget
 main_canvas = tk.Canvas(window)
 main_canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
-# Create a Scrollbar widget and attach it to the canvas
-scrollbar = tk.Scrollbar(window, command=main_canvas.yview)
-scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-main_canvas.configure(yscrollcommand=scrollbar.set)
+# Create a Scrollbar widget for vertical scrolling and attach it to the canvas
+v_scrollbar = tk.Scrollbar(window, orient='vertical', command=main_canvas.yview)
+v_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+main_canvas.configure(yscrollcommand=v_scrollbar.set)
 
-# Create a frame inside the canvas
+# Create a frame inside the canvas to hold other widgets
 main_frame = tk.Frame(main_canvas)
-
 # Add the frame to the canvas
-main_canvas.create_window((0, 0), window=main_frame, anchor='nw')
+canvas_window = main_canvas.create_window((0, 0), window=main_frame, anchor='nw')
 
 # Function to update the scrolling region to match the size of the frame
 def onFrameConfigure(event):
@@ -918,15 +918,15 @@ img_frame = ttk.Frame(main_frame)
 img_frame.grid(row=2, column=0, sticky='nw')
 
 # Create a canvas within the frame
-canvas = tk.Canvas(img_frame, bg='lightgrey', width=512, height=512)
-canvas.grid(row=0, column=0, sticky='nw')
+img_canvas = tk.Canvas(img_frame, bg='lightgrey', width=512, height=512)
+img_canvas.grid(row=0, column=0, sticky='nw')
 
-# Add scrollbars to the canvas
-h_scroll = ttk.Scrollbar(img_frame, orient='horizontal', command=canvas.xview)
+# Add scrollbars to the img_canvas
+h_scroll = ttk.Scrollbar(img_frame, orient='horizontal', command=img_canvas.xview)
 h_scroll.grid(row=1, column=0, sticky='ew')
-v_scroll = ttk.Scrollbar(img_frame, orient='vertical', command=canvas.yview)
+v_scroll = ttk.Scrollbar(img_frame, orient='vertical', command=img_canvas.yview)
 v_scroll.grid(row=0, column=1, sticky='ns')
-canvas.configure(xscrollcommand=h_scroll.set, yscrollcommand=v_scroll.set)
+img_canvas.configure(xscrollcommand=h_scroll.set, yscrollcommand=v_scroll.set)
 
 
 
@@ -1148,8 +1148,8 @@ btn_rgb_hsi_sharping.grid(row = 23, column = 1)
 lbl_seg_fea.grid(row = 24, column = 0)
 btn_seg_fea.grid(row = 24, column = 1)
 
-# After adding all widgets, update the scrollregion of the canvas
+# After adding all widgets, update the scrollregion of the img_canvas
 main_frame.update_idletasks()
-canvas.config(scrollregion=canvas.bbox("all"))
+img_canvas.config(scrollregion=img_canvas.bbox("all"))
 
 window.mainloop()
