@@ -573,7 +573,7 @@ def red_img():
             
     ORIGNAL_open_img_copy = new_img
     photo_image = ImageTk.PhotoImage(new_img)
-    update_display_canvas(photo_image)
+    update_display_img_canvas(photo_image)
 
     Dynamic_Island.config(text = "Red component image", bg = "red", font = ("Arial", 14), width = 80, height = 2)
     window.update_idletasks()
@@ -593,7 +593,7 @@ def green_img():
             
     ORIGNAL_open_img_copy = new_img
     photo_image = ImageTk.PhotoImage(new_img)
-    update_display_canvas(photo_image)
+    update_display_img_canvas(photo_image)
 
     Dynamic_Island.config(text = "Green component image", bg = "green2", font = ("Arial", 14), width = 80, height = 2)
     window.update_idletasks()
@@ -613,7 +613,7 @@ def blue_img():
             
     ORIGNAL_open_img_copy = new_img
     photo_image = ImageTk.PhotoImage(new_img)
-    update_display_canvas(photo_image)
+    update_display_img_canvas(photo_image)
     
     Dynamic_Island.config(text = "Blue component image", bg = "blue", font = ("Arial", 14), width = 80, height = 2)
     window.update_idletasks()
@@ -733,7 +733,7 @@ def rgb_complements():
             
     ORIGNAL_open_img_copy = new_img
     photo_image = ImageTk.PhotoImage(new_img)
-    update_display_canvas(photo_image)
+    update_display_img_canvas(photo_image)
     
     Dynamic_Island.config(text = "RGB model color complements", bg = "ghost white", font = ("Arial", 14), width = 80, height = 2)
     window.update_idletasks()
