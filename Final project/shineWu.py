@@ -3,9 +3,7 @@ import tkinter
 import numpy as np
 import PIL
 import scipy.fft
-#import sklearn
 from PIL import Image, ImageEnhance, ImageFont, ImageTk
-#from sklearn import preprocessing
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.figure
