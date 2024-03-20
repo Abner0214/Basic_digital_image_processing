@@ -1,4 +1,5 @@
-# 1. Basic Digital Image Processing Application(HW.py)
+# Basic Digital Image Processing Application
+`/HW`
 
 This project is a Python application for basic digital image processing(homework from NSYSU CSE course). It allows users to perform various operations on images such as opening, saving, displaying, adjusting contrast and brightness, resizing, rotating, and applying spatial filters. It also supports processing both grayscale and color images, including transformations like RGB to HSI conversion, and enhancing details using RGB complements. The application is built using Tkinter for the GUI, PIL for image handling, and matplotlib for plotting histograms and image transformations.
 
@@ -48,7 +49,8 @@ Contributions to this project are welcome! Please fork the repository and submit
 ---
 
 
-# 2. Advanced Digital Image Processing Toolkit(fin.py)
+# Advanced Digital Image Processing Toolkit
+`/Final project`
 
 This toolkit provides a comprehensive suite of tools for digital image processing(final project from NSYSU CSE course). It is divided into two main components: the first focuses on basic image manipulations including adjusting contrast, resizing, rotating, and applying filters. The second component introduces advanced features such as watermarking, image overlaying, RGB to HSI conversion, and component analysis among others. The projects leverage Python libraries such as Tkinter for the GUI, PIL (Pillow) for image manipulation, matplotlib for visualization, along with custom modules `sheep` and `shineWu` for specialized processing.
 
